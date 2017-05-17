@@ -4,6 +4,7 @@
 + [Introduction](#intro)
 + [Getting Started](#getting_started)
 + [Demo Design](#demo_design)
++ [Give the example app a try](#try_app)
 + [Sample Code](#sample_code)
 
 ## Introduction <a id="intro" class="tall">&nbsp;</a>
@@ -77,7 +78,7 @@ From a developer's prespective, other desirable features included:
 + Abstract subscription details (user id and locations) into PowerTrack Rules.
     + This design was picked to keep the enroller light-weight by not implementing native data persistence. All user enrollments are stored remotely as a real-time PowerTrack ruleset. 
 
-
+## Give the example app a try <a id="try_app" class="tall">&nbsp;</a>
 
 ## Sample Code <a id="sample_code" class="tall">&nbsp;</a>
 

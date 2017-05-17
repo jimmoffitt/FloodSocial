@@ -8,7 +8,7 @@ require_relative 'power_track_rules_manager'
 
 class EventManager
 
-   attr_accessor :DMsender, :RulesManager
+   attr_accessor :DMsender, :RulesManager 
 
    def initialize
 	  #puts 'Creating SendDirectMessage object'
@@ -17,7 +17,7 @@ class EventManager
 	  @RulesManager = PowerTrackRulesManager.new
    end
 
-   #responses are based on options' metadata settings.
+   #responses are based on options' Quick Reply metadata settings.
    #pick_from_list, select_on_map, location list items (e.g. 'location_list_choice: Austin' or 'Fort Worth')
    #map_selection (triggers a fetch of the shared coordinates)
 
@@ -28,92 +28,94 @@ class EventManager
 	  events = JSON.parse(events)
 
 	  if events.key? ('direct_message_events')
+		 
+		  dm_events = events['direct_message_events']
 
-		 dm_events = events['direct_message_events']
+		  dm_events.each do | dm_event |
+			 
+			 if dm_event['type'] == 'message_create'
 
-		 dm_events.each do | dm_event |
+				#Is this a response? Test for the 'quick_reply_response' key.
+				is_response = dm_event['message_create'] && dm_event['message_create']['message_data'] && dm_event['message_create']['message_data']['quick_reply_response']
+				
+				if is_response 
+					response = dm_event['message_create']['message_data']['quick_reply_response']['metadata']
+					user_id = dm_event['message_create']['sender_id']	  
 
-			if dm_event['type'] == 'message_create'
+					puts "User #{user_id} answered with #{response}"
 
-			   #Is this a response? Test for the 'quick_reply_response' key.
-			   is_response = dm_event['message_create'] && dm_event['message_create']['message_data'] && dm_event['message_create']['message_data']['quick_reply_response']
+				    if response == 'learn_more'
+					   @DMSender.send_system_info(user_id)
+					elsif response == 'return_to_system'
+					   @DMSender.send_welcome_message(user_id)
+					elsif response == 'select_on_map'
+					   @DMSender.send_map(user_id)
+					elsif response == 'pick_from_list'
+					   @DMSender.send_location_list(user_id)
+					elsif response.include? 'location_list_choice'
+					   location_choice = response['location_list_choice: '.length..-1]
+					   coordinates = []
+					   coordinates = @RulesManager.add_rule_for_list_subscription(user_id, location_choice)
+					   location_choice = "#{location_choice} (a 25-mile radius circle centered at #{coordinates[0]}, #{coordinates[1]} to be specific)"
+					   @DMSender.send_confirmation(user_id, location_choice)
+					elsif response == 'map_selection'
+					   #Navigate and extract the long lat details
+					   
+					   #Do we have a Twitter Place or exact coordinates....?
+					   location_type = dm_event['message_create']['message_data']['attachment']['location']['type']
+					   
+					   if location_type == 'shared_coordinate' 
+						   coordinates = dm_event['message_create']['message_data']['attachment']['location']['shared_coordinate']['coordinates']['coordinates']
+						   location_choice = "25-mile radius circle centered at #{coordinates[0].round(4)}, #{coordinates[1].round(4)}."
+					   else
+						  coordinates = dm_event['message_create']['message_data']['attachment']['location']['shared_place']['place']['centroid']
+						  place_name = dm_event['message_create']['message_data']['attachment']['location']['shared_place']['place']['name']
+						  location_choice = "25-mile radius circle centered on #{place_name} (with centroid of #{coordinates[0].round(4)}, #{coordinates[1].round(4)})."
+					   end
 
-			   if is_response
-				  response = dm_event['message_create']['message_data']['quick_reply_response']['metadata']
-				  user_id = dm_event['message_create']['sender_id']
+					   @RulesManager.add_rule_for_map_subscription(user_id, coordinates[0].round(4), coordinates[1].round(4),location_choice)
 
-				  puts "User #{user_id} answered with #{response}"
+					   @DMSender.send_confirmation(user_id, location_choice)
+					elsif response == 'list'
+					   puts "Retrieve current config for user #{user_id}. "
+					   subscriptions = @RulesManager.get_subscriptions(user_id)
+					   puts "subScriptions: #{subscriptions}"
+					   @DMSender.send_subscription_list(user_id, subscriptions)
+					else #we have an answer to one of the above.
+					   puts "UNHANDLED user response: #{response}"
+					end
+				else
+				   #Since this DM is not a response to a QR, let's check for other 'action' commands
+				   #puts 'Received a command/question DM? Need to track conversation stage?'
 
-				  if response == 'learn_more'
-					 @DMSender.send_system_info(user_id)
-				  elsif response == 'return_to_system'
-					 @DMSender.send_welcome_message(user_id)
-				  elsif response == 'select_on_map'
-					 @DMSender.send_map(user_id)
-				  elsif response == 'pick_from_list'
-					 @DMSender.send_location_list(user_id)
-				  elsif response.include? 'location_list_choice'
-					 location_choice = response['location_list_choice: '.length..-1]
-					 coordinates = []
-					 coordinates = @RulesManager.add_subscription_for_list_selection(user_id, location_choice)
-					 location_choice = "#{location_choice} (a 25-mile radius circle centered at #{coordinates[0]}, #{coordinates[1]} to be specific)"
-					 @DMSender.send_confirmation(user_id, location_choice)
-				  elsif response == 'map_selection'
-					 #Navigate and extract the long lat details
+				   request = dm_event['message_create']['message_data']['text']
+				   user_id = dm_event['message_create']['sender_id']
 
-					 #Do we have a Twitter Place or exact coordinates....?
-					 location_type = dm_event['message_create']['message_data']['attachment']['location']['type']
-
-					 if location_type == 'shared_coordinate'
-						coordinates = dm_event['message_create']['message_data']['attachment']['location']['shared_coordinate']['coordinates']['coordinates']
-						location_choice = "25-mile radius circle centered at #{coordinates[0].round(4)}, #{coordinates[1].round(4)}."
-					 else
-						coordinates = dm_event['message_create']['message_data']['attachment']['location']['shared_place']['place']['centroid']
-						place_name = dm_event['message_create']['message_data']['attachment']['location']['shared_place']['place']['name']
-						location_choice = "25-mile radius circle centered on #{place_name} (with centroid of #{coordinates[0].round(4)}, #{coordinates[1].round(4)})."
-					 end
-
-					 @RulesManager.add_subscription_for_coordinates(user_id, coordinates[0].round(4), coordinates[1].round(4))
-
-					 @DMSender.send_confirmation(user_id, location_choice)
-				  elsif response == 'list'
-					 puts "Retrieve current config for user #{user_id}. "
-					 subscriptions = @RulesManager.get_subscriptions(user_id)
-					 puts "subscriptions: #{subscriptions}"
-					 @DMSender.send_subscription_list(user_id, subscriptions)
-				  else #we have an answer to one of the above.
-					 puts "UNHANDLED user response: #{response}"
-				  end
-			   else
-				  #Since this DM is not a response to a QR, let's check for other 'action' commands
-				  puts 'Received a command/question DM? Need to track conversation stage?'
-
-				  request = dm_event['message_create']['message_data']['text']
-				  user_id = dm_event['message_create']['sender_id']
-
-				  if request.downcase == 'add'
-					 puts 'Send QR to add an area'
-					 #Send QR for which 'select area' method
-					 @DMSender.send_welcome_message(user_id)
-
-				  elsif request.downcase == 'unsubscribe' or request.downcase == 'quit' or request.downcase == 'stop'
-					 puts 'unsubscribe'
-					 @RulesManager.delete_subscription(user_id)
-					 @DMSender.send_unsubscribe(user_id)
-
-				  elsif request.downcase == 'list'
-					 puts "Retrieve current config for user #{user_id}. "
-					 subscriptions = @RulesManager.get_subscriptions(user_id)
-					 puts "subscriptions: #{subscriptions}"
-					 @DMSender.send_subscription_list(user_id, subscriptions)
-				  end
-			   end
-			else
-			   puts "Hey a new, unhandled type has been implemented on the Twitter side."
-			end
-		 end
+				   if request.downcase == 'add'
+					  puts 'Send QR to add an area'
+					  #Send QR for which 'select area' method
+					  @DMSender.send_welcome_message(user_id)
+					  
+				   elsif request.downcase == 'unsubscribe' or request.downcase == 'quit' or request.downcase == 'stop'
+					  puts 'unsubscribe'
+					  @RulesManager.delete_subscription(user_id)
+					  @DMSender.send_unsubscribe(user_id)
+					  
+				   elsif request.downcase == 'list'	  
+					  puts "Retrieve current config for user #{user_id}. "
+					  area_names = @RulesManager.get_subscriptions(user_id)
+					  puts "EventManager: left Rules manager with #{area_names}"
+					  @DMSender.send_subscription_list(user_id, area_names)
+				   else
+					  "Listen, I only understand a few commands like: Add, List, Quit"
+				   end
+				end   
+			 else
+				puts "Hey a new, unhandled type has been implemented on the Twitter side."
+			 end	
+		  end
 	  else
 		 puts "Received test JSON."
-	  end
+	  end	 
    end
- end
+end

@@ -168,8 +168,6 @@ class GenerateDirectMessageContent
 
 	  event['event']['message_create']['message_data'] = message_data
 
-	  #puts event.to_json
-
 	  event.to_json
    end
 
@@ -191,12 +189,12 @@ class GenerateDirectMessageContent
 	  message_data['quick_reply']['type'] = 'options'
 
 	  options = []
-	  #Not including 'description' option attributes.
 
 	  list.each do |item|
 		 option = {}
 		 option['label'] = item
 		 option['metadata'] = "location_list_choice: #{item}"
+		 #Not including 'description' option attributes.
 		 options << option
 	  end
 
@@ -208,18 +206,12 @@ class GenerateDirectMessageContent
    end
    
    def generate_subscription_list(user_id, subscriptions)
-	  
-	  puts "IN GENERATE subscriptions: #{subscriptions}"
-	  puts subscriptions.count
-	  
-	  
 	  event = {}
 	  event['event'] = {}
 	  event['event']['type'] = 'message_create'
 	  event['event']['message_create'] = {}
 	  event['event']['message_create']['target'] = {}
 	  event['event']['message_create']['target']['recipient_id'] = "#{user_id}"
-
 
 	  message_data = {}
 	  
@@ -233,7 +225,7 @@ class GenerateDirectMessageContent
 		 list_message = "You are subscribed to the following areas of interest:"
 		 
 		 subscriptions.each do |area|
-			list_message = list_message + "\n #{area}"
+			list_message = list_message + "\n * #{area}"
 		 end
 		 
 		 list_message = list_message +  "\n\n To select an additional area, send an 'Add' Direct Message.
@@ -287,7 +279,6 @@ class GenerateDirectMessageContent
 	  event['event']['message_create']['message_data'] = message_data
 
 	  event.to_json
-	  
 	  
    end
 

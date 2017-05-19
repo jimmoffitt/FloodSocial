@@ -1,0 +1,16 @@
+dm_api:
+  #API key/secret
+  consumer_key:
+  consumer_secret:
+  #Access token/secret
+  access_token:
+  access_token_secret:
+
+power_track:
+  account_name: AccountName  #Used in URL for Gnip APIs.
+  user_name: me@there.com
+  password: myp455w0rD
+  label: prod
+
+settings:
+  sources: USGS_TexasFlood, USGS_TexasRain #Twitter account names without the '@'

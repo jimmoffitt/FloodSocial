@@ -12,8 +12,17 @@ class EnrollerApp < Sinatra::Base
 	end
 
 	#Load authentication details
+	config_file = './config/config.yaml'
 	keys = {}
-	keys = YAML::load_file('./config/config.yaml')
+	
+	if File.file?(config_file)
+		keys = YAML::load_file(config_file)
+	else
+		keys['consumer_key'] = ENV['CONSUMER_KEY']
+		keys['consumer_secret'] = ENV['CONSUMER_SECRET']
+		keys['access_token'] = ENV['ACCESS_TOKEN']
+		keys['access_token_secret'] = ENV['ACCESS_TOKEN_SECRET']
+	end
 
 	#Account Activity API with OAuth
 	set :dm_api_consumer_key, keys['dm_api']['consumer_key']

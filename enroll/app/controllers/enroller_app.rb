@@ -6,66 +6,66 @@ require 'json'
 require_relative "../../app/helpers/event_manager"
 
 class EnrollerApp < Sinatra::Base
-   
- 	  def initialize
-		 super()
-	  end
 
-	  #Load authentication details
-	  keys = {}
-	  keys = YAML::load_file('./config/config_private.yaml')
+	def initialize
+		super()
+	end
 
-	  #Account Activity API with OAuth
-	  set :dm_api_consumer_key, keys['dm_api']['consumer_key']
-	  set :dm_api_consumer_secret, keys['dm_api']['consumer_secret']
-	  set :dm_api_access_token, keys['dm_api']['access_token']
-	  set :dm_api_access_token_secret, keys['dm_api']['access_token_secret']
+	#Load authentication details
+	keys = {}
+	keys = YAML::load_file('./config/config.yaml')
 
-	  set :title, 'Twitter Account Activity API client'
+	#Account Activity API with OAuth
+	set :dm_api_consumer_key, keys['dm_api']['consumer_key']
+	set :dm_api_consumer_secret, keys['dm_api']['consumer_secret']
+	set :dm_api_access_token, keys['dm_api']['access_token']
+	set :dm_api_access_token_secret, keys['dm_api']['access_token_secret']
 
-	  def generate_crc_response(consumer_secret, crc_token)
-		 hash = OpenSSL::HMAC.digest('sha256', consumer_secret, crc_token)
-		 return Base64.encode64(hash).strip!
-	  end
+	set :title, 'Twitter Account Activity API client'
 
-	  get '/' do
-		 "Welcome to the @FloodSocial notification system! <br>
+	def generate_crc_response(consumer_secret, crc_token)
+		hash = OpenSSL::HMAC.digest('sha256', consumer_secret, crc_token)
+		return Base64.encode64(hash).strip!
+	end
+
+	get '/' do
+		"Welcome to the @FloodSocial notification system! <br>
           This websocket component is used for enrolling subscribers into a Twitter-based notification system. <br>
           This component is a consumer of Account Activity API events."
-	  end
+	end
 
-	  # Receives challenge response check (CRC).
-	  get '/webhooks/twitter' do
-		 crc_token = params['crc_token']
-		 
-		 if not crc_token.nil?
-		 
+	# Receives challenge response check (CRC).
+	get '/webhooks/twitter' do
+		crc_token = params['crc_token']
+
+		if not crc_token.nil?
+
 			puts "CRC event with #{crc_token}"
 			#puts "consumer secret: #{settings.dm_api_consumer_secret}"
 			puts "headers: #{headers}"
 			puts headers['X-Twitter-Webhooks-Signature']
-			
+
 			response = {}
 			response['response_token'] = "sha256=#{generate_crc_response(settings.dm_api_consumer_secret, crc_token)}"
-			
+
 			body response.to_json
-		 end
-			
-		 status 200
+		end
 
-	  end
+		status 200
 
-	  # Receives DM events.
-	  post '/webhooks/twitter' do
-		 puts "Received event from DM API"
+	end
 
-		 request.body.rewind
-		 event = request.body.read
+	# Receives DM events.
+	post '/webhooks/twitter' do
+		puts "Received event from DM API"
 
-		 manager = EventManager.new
-		 manager.handle_event(event)
+		request.body.rewind
+		event = request.body.read
 
-		 status 200
+		manager = EventManager.new
+		manager.handle_event(event)
 
-	  end
+		status 200
+
+	end
 end

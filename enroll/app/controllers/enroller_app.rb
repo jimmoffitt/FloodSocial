@@ -17,18 +17,19 @@ class EnrollerApp < Sinatra::Base
 	
 	if File.file?(config_file)
 		keys = YAML::load_file(config_file)
+		set :dm_api_consumer_key, keys['dm_api']['consumer_key']
+		set :dm_api_consumer_secret, keys['dm_api']['consumer_secret']
+		set :dm_api_access_token, keys['dm_api']['access_token']
+		set :dm_api_access_token_secret, keys['dm_api']['access_token_secret']
 	else
-		keys['consumer_key'] = ENV['CONSUMER_KEY']
-		keys['consumer_secret'] = ENV['CONSUMER_SECRET']
-		keys['access_token'] = ENV['ACCESS_TOKEN']
-		keys['access_token_secret'] = ENV['ACCESS_TOKEN_SECRET']
+		set :dm_api_consumer_key, ENV['CONSUMER_KEY']
+		set :dm_api_consumer_secret, ENV['CONSUMER_SECRET']
+		set :dm_api_access_token, ENV['ACCESS_TOKEN']
+		set :dm_api_access_token_secret, ENV['ACCESS_TOKEN_SECRET']
 	end
 
 	#Account Activity API with OAuth
-	set :dm_api_consumer_key, keys['dm_api']['consumer_key']
-	set :dm_api_consumer_secret, keys['dm_api']['consumer_secret']
-	set :dm_api_access_token, keys['dm_api']['access_token']
-	set :dm_api_access_token_secret, keys['dm_api']['access_token_secret']
+	
 
 	set :title, 'Twitter Account Activity API client'
 

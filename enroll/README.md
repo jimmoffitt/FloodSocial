@@ -4,8 +4,10 @@
 + [Introduction](#intro)
 + [Getting Started](#getting_started)
 + [Demo Design](#demo_design)
-+ [Give the example app a try](#try_app)
++ [Development Environment, Tips, and Tools](#demo_dev)
++ [Tour the Demo](#try_app)
 + [Sample Code](#sample_code)
++ [Deploying Demo](#deploying)
 
 ## Introduction <a id="intro" class="tall">&nbsp;</a>
 
@@ -29,6 +31,7 @@ We'll start off with a discussion on how to get started with the Twitter Direct 
 
 A great place to start is our API documentation:
 
++ Getting Started with the Account Activity API https://dev.twitter.com/webhooks/getting-started
 + Twitter Webhook APIs https://dev.twitter.com/webhooks
 + Account Activity API documentation https://dev.twitter.com/webhooks/account-activity
 + Direct Message API methods: https://dev.twitter.com/rest/direct-messages
@@ -38,7 +41,7 @@ To help you put all that information together, check out our [Twitter Direct Mes
 As a developer, here are the steps you'll take:
 
 Configuring Twitter Webhooks
-+ Create a Twitter Application, and have it enabled with the Account Activity API 
++ Create a Twitter Application, and have it enabled with the Account Activity API. For now, you'll need to apply for Account Activity API access [HERE](https://gnipinc.formstack.com/forms/account_activity_api_configuration_request_form).
 + Subscribe your consumer web app using the Account Activity API
 + Create a default Welcome Message 
 
@@ -78,7 +81,20 @@ From a developer's prespective, other desirable features included:
 + Abstract subscription details (user id and locations) into PowerTrack Rules.
     + This design was picked to keep the enroller light-weight by not implementing native data persistence. All user enrollments are stored remotely as a real-time PowerTrack ruleset. 
 
-## Give the example app a try <a id="try_app" class="tall">&nbsp;</a>
+## Tour the Demo <a id="try_app" class="tall">&nbsp;</a>
+
+To check out the demo simply send a Direct Message to @FloodSocial. When you do that you will see a Welcome Message with options to select a location of interest, learn more about the system, or if you have previously enrolled, unsubscribe.
+
+< WELCOME MESSAGE SCREENSHOT >
+
+After you have navigated past the Welcome Message you can send 'command' Direct Messages to add more areas of interest, to list your current areas, or to unsubscribe.
+
+< MORE SCREENSHOTS? >
+
+## Development Environment, Tips, and Tools <a id="demo_dev" class="tall">&nbsp;</a>
+
+
+
 
 ## Sample Code <a id="sample_code" class="tall">&nbsp;</a>
 
@@ -210,6 +226,28 @@ end
 
 
 ### Rule Manager
+
+
+
+
+
+## Deploying Demo <a id="deploying" class="tall">&nbsp;</a>
+
+Now that the webhook consumer and Direct Message event manager is written and tested, it is time to deploy the application to a 'real' web server. As part of the transition from development to production, we will be porting the 'host' account to a @FloodSocial account. For this demo we will be deploying the application to Heroku at https://floodsocial.herokuapp.com/. One potential issue with hosting on Heroku may be that the server may go to sleep and thus introduce enough latency to fail the Twitter Account Activity CRC test. We'll keep an eye on that and explore Heroku plans that prevent this from happening. 
+
+For this tutorial, I decided to develop the app under one account, then deploy the production version under a second one. You may choose to use a single account for both development and production. 
+
+We'll take the following steps to deploy to Heroku:
+
++ Create the production Twitter app with Account Activity API enabled, generate keys and tokens.
++ Update code to use keys and tokens of the production app. 
++ Review Welcome Message contents and make any neccessary revisions.
++ Generate Webhook ID and subscribe that and the Webhook 'event reciever' URL with the Twitter Account Activity API. 
+  + Register your webhook URL with your app using POST account_activity/webhooks.
+  + Use the returned webhook_id to add user subscriptions with POST account_activity/webhooks/:webhook_id/subscriptions.
+
+
+
 
 
 

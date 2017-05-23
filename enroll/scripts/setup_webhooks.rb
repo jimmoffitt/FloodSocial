@@ -7,8 +7,6 @@ require_relative '../app/helpers/api_oauth_request'
 class TaskManager
 
 	attr_accessor :twitter_api,
-	              :webhook_url, #https://there.me/webhooks/twitter
-	              :webhook_id, #Returned when setting up a Webhook with URL.
 	              :webhook_configs  #An array of Webhook IDs. Currently numeric(e.g. 88888888888888), subject to change?
 	
 	def initialize(config_file=nil, url=nil)
@@ -56,9 +54,7 @@ class TaskManager
 		results = JSON.parse(response)
 		
 		if results['errors'].nil?
-			@webhook_id = results['id']
-			@webhook_url = results['url']
-			puts "Created webhook instance with webhook_id: #{@webhook_id} | pointing to #{@webhook_url}"
+			puts "Created webhook instance with webhook_id: #{results['id']} | pointing to #{results['url']}"
 		else
 			puts results['errors']
 		end
@@ -129,12 +125,22 @@ class TaskManager
 
 	# https://dev.twitter.com/webhooks/reference/put/account_activity/webhooks
 	# PUT https://api.twitter.com/1.1/account_activity/webhooks/:webhook_id.json
-	def confirmCRC(id = nil)
-		response = @twitter_api.make_put_request("#{@uri_path}/webhooks/#{@webhook_id}.json")
+	def confirm_crc(id)
 
-		results = JSON.parse(response)
+		uri_path =  "#{@twitter_api.uri_path}/webhooks/#{id}.json"
+		
+		puts uri_path
+		
+		response = @twitter_api.make_put_request(uri_path)
 
-		puts results
+		if response == '204'
+			puts "CRC request successful and webhook status set to valid."
+		else
+			puts "Webhook URL does not meet the requirements. Please consult: https://dev.twitter.com/webhook/security"
+		end
+
+		response
+		
 	end
 
 end
@@ -147,8 +153,7 @@ if __FILE__ == $0 #This script code is executed when running this file.
 	OptionParser.new do |o|
 
 		#Passing in a config file.... Or you can set a bunch of parameters.
-		o.on('-c CONFIG', '--config', 'Configuration file (including path) that provides account OAuth details.
-                                       Config files include username, password, account name and stream label/name.') { |config| $config = config}
+		o.on('-c CONFIG', '--config', 'Configuration file (including path) that provides account OAuth details. ') { |config| $config = config}
 		o.on('-t TASK','--task', "Securing Webhooks Task to perform: trigger CRC ('crc'), set config ('set'), list configs ('list'), delete config ('delete'), subscribe app ('subscribe'), unsubscribe app ('unsubscribe'),get subscription ('subscription').") {|task| $task = task}
 		o.on('-u URL','--url', "Webhooks 'consumer' URL, e.g. https://mydomain.com/webhooks/twitter.") {|url| $url = url}
 		o.on('-i ID','--id', 'Webhook ID') {|id| $id = id}
@@ -197,19 +202,16 @@ if __FILE__ == $0 #This script code is executed when running this file.
 		task_manager.delete_webhook_subscription($id)
 	elsif $task == 'subscription'
 		task_manager.get_webhook_subscription($id)
-	elsif $task == 'crc' #triggers a CRC for all configured unless a specific webhook ID is passed in.
+	elsif $task == 'crc' #triggers a CRC for all configured webhook ids unless a specific id is passed in.
 		
 		if $id.nil?
 			#Get all configs
-			result = task_manager.get_webhook_configs
-			
-			#extract IDs.
-			ids = ''
-			
-			ids.each do |id|
-				result = task_manager.confirm_crc(id)
-				puts result
-			end	
+			configs = task_manager.get_webhook_configs
+
+			configs.each do |config|
+				#puts config
+				task_manager.confirm_crc(config['id'])
+			end
 		else
 			result = task_manager.confirm_crc($id)
 			puts result

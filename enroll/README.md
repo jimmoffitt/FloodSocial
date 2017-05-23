@@ -107,9 +107,32 @@ After you have navigated past the Welcome Message you can send 'command' Direct 
 
 ### Scripts for configuration webhooks
 
+
+< THIS RUBY SCRIPT WAS WRITTEN TO HELP MANAGE THE 'SECURE WEBHOOKS' STEPS >
+
 + Using AA API, Assign webhook URL, generate webhook ID. 
+
+ ```ruby
+  def set_webhook_config(url)
+		uri_path = "/1.1/account_activity/webhooks.json?url=#{url}"
+		response = @twitter_api.make_post_request(uri_path,nil)
+		results = JSON.parse(response)
+    
+    #Response provides the new Webhook ID
+		@webhook_id = results['id']
+		@webhook_url = results['url']
+		puts "Created webhook instance with webhook_id: #{@webhook_id} | pointing to #{@webhook_url}"
+
+		results
+	end
+  ```
+
 + Using DM API, create Default Welcome Message
 + Using AA API, add subscriber (webhook ID).
+
+
+
+
 
 #### CRC Method 
 
@@ -237,14 +260,28 @@ Now that the webhook consumer and Direct Message event manager is written and te
 
 For this tutorial, I decided to develop the app under one account, then deploy the production version under a second one. You may choose to use a single account for both development and production. 
 
+
 We'll take the following steps to deploy to Heroku:
 
 + Create the production Twitter app with Account Activity API enabled, generate keys and tokens.
 + Update code to use keys and tokens of the production app. 
-+ Review Welcome Message contents and make any neccessary revisions.
-+ Generate Webhook ID and subscribe that and the Webhook 'event reciever' URL with the Twitter Account Activity API. 
++ Stand-up Web app.
+  + Implement GET route to receive CRC requests from Twitter via the Account Activity API.
+  + Implement POST route to receive Direct Message events via the Account Activity API.
++ Set Webhook Configuration.
+  + Make POST request with Webhook consumer URL. 
+  
+ 
+
+
+
+Generate Webhook ID and subscribe that and the Webhook 'event reciever' URL with the Twitter Account Activity API. 
   + Register your webhook URL with your app using POST account_activity/webhooks.
   + Use the returned webhook_id to add user subscriptions with POST account_activity/webhooks/:webhook_id/subscriptions.
+  
+  
++ Set Default Welcome Message. 
+  + Review Welcome Message contents and make any neccessary revisions.  
 
 
 

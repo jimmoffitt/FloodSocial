@@ -67,41 +67,8 @@ if __FILE__ == $0 #This script code is executed when running this file.
 		$config = File.join(File.dirname(__FILE__), $config)
 
 	end
-	
 
 	message_manager = WelcomeMessageManager.new($config)
 
-	if $task == 'list'
-		configs = task_manager.get_webhook_configs
-		configs.each do |config|
-			puts "Webhook ID #{config['id']} --> #{config['url']}}"
-		end
-	elsif $task == 'set'
-		task_manager.set_webhook_config(url)
-	elsif $task == 'delete'
-		task_manager.delete_webhook_config($id)
-	elsif $task == 'subscribe'
-		task_manager.set_webhook_subscription($id)
-	elsif $task == 'unsubscribe'
-		task_manager.delete_webhook_subscription($id)
-	elsif $task == 'subscription'
-		task_manager.get_webhook_subscription($id)
-	elsif $task == 'crc' #triggers a CRC for all configured webhook ids unless a specific id is passed in.
-
-		if $id.nil?
-			#Get all configs
-			configs = task_manager.get_webhook_configs
-
-			configs.each do |config|
-				#puts config
-				task_manager.confirm_crc(config['id'])
-			end
-		else
-			result = task_manager.confirm_crc($id)
-			puts result
-		end
-	else
-		puts "Unhandled task. Available tasks: 'list', 'crc', 'set', 'subscribe', 'delete'"
-	end
 end
 

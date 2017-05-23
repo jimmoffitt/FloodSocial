@@ -54,11 +54,14 @@ class TaskManager
 
 		response = @twitter_api.make_post_request(uri_path,nil)
 		results = JSON.parse(response)
-
-		#TODO: Handle error
-		@webhook_id = results['id']
-		@webhook_url = results['url']
-		puts "Created webhook instance with webhook_id: #{@webhook_id} | pointing to #{@webhook_url}"
+		
+		if results['errors'].nil?
+			@webhook_id = results['id']
+			@webhook_url = results['url']
+			puts "Created webhook instance with webhook_id: #{@webhook_id} | pointing to #{@webhook_url}"
+		else
+			puts results['errors']
+		end
 
 		results
 	end
@@ -144,7 +147,7 @@ if __FILE__ == $0 #This script code is executed when running this file.
 	OptionParser.new do |o|
 
 		#Passing in a config file.... Or you can set a bunch of parameters.
-		o.on('-c CONFIG', '--config', 'Configuration file (including path) that provides account and download settings.
+		o.on('-c CONFIG', '--config', 'Configuration file (including path) that provides account OAuth details.
                                        Config files include username, password, account name and stream label/name.') { |config| $config = config}
 		o.on('-t TASK','--task', "Securing Webhooks Task to perform: trigger CRC ('crc'), set config ('set'), list configs ('list'), delete config ('delete'), subscribe app ('subscribe'), unsubscribe app ('unsubscribe'),get subscription ('subscription').") {|task| $task = task}
 		o.on('-u URL','--url', "Webhooks 'consumer' URL, e.g. https://mydomain.com/webhooks/twitter.") {|url| $url = url}
@@ -185,8 +188,7 @@ if __FILE__ == $0 #This script code is executed when running this file.
 			puts "Webhook ID #{config['id']} --> #{config['url']}}"
 		end
 	elsif $task == 'set'
-		result = task_manager.set_webhook_config(url)
-		puts result
+		task_manager.set_webhook_config(url)
 	elsif $task == 'delete'
 		task_manager.delete_webhook_config($id)
 	elsif $task == 'subscribe'

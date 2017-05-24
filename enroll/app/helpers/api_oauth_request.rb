@@ -57,6 +57,9 @@ class ApiOauthRequest
 		if response.code.to_i >= 300
 			puts "error: #{response}"
 		end
+		
+		puts "response.code: #{response.code}"
+		puts "response.body: #{response.body}"
 
 		if response.body.nil? #Some successful API calls have nil response bodies, but have 2## response codes.
 			 return response.code #Examples include 'set subscription', 'get subscription', and 'delete subscription'

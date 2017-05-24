@@ -1,4 +1,4 @@
-require "sinatra"
+require 'sinatra'
 require 'base64'
 require 'yaml'
 require 'json'
@@ -12,11 +12,12 @@ class EnrollerApp < Sinatra::Base
 	end
 
 	#Load authentication details
-	config_file = './config/config.yaml'
+	config_file = File.join(File.dirname(__FILE__), '../../config/config.yaml')
 	keys = {}
 	
 	if File.file?(config_file)
 		keys = YAML::load_file(config_file)
+		puts "keys #{keys}"
 		set :dm_api_consumer_key, keys['dm_api']['consumer_key']
 		set :dm_api_consumer_secret, keys['dm_api']['consumer_secret']
 		set :dm_api_access_token, keys['dm_api']['access_token']
@@ -29,11 +30,11 @@ class EnrollerApp < Sinatra::Base
 	end
 
 	#Account Activity API with OAuth
-	
 
 	set :title, 'Twitter Account Activity API client'
 
 	def generate_crc_response(consumer_secret, crc_token)
+		puts "consumer_secret: #{consumer_secret}"
 		hash = OpenSSL::HMAC.digest('sha256', consumer_secret, crc_token)
 		return Base64.encode64(hash).strip!
 	end

@@ -130,6 +130,8 @@ class TaskManager
 		uri_path =  "#{@twitter_api.uri_path}/webhooks/#{id}.json"
 		response = @twitter_api.make_put_request(uri_path)
 		
+		puts response
+		
 		if response == '204'
 			puts "CRC request successful and webhook status set to valid."
 		else
@@ -187,7 +189,7 @@ if __FILE__ == $0 #This script code is executed when running this file.
 	if $task == 'list'
 		configs = task_manager.get_webhook_configs
 		configs.each do |config|
-			puts "Webhook ID #{config['id']} --> #{config['url']}}"
+			puts "Webhook ID #{config['id']} --> #{config['url']}"
 		end
 	elsif $task == 'set'
 		task_manager.set_webhook_config(url)

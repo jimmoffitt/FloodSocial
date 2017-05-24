@@ -11,23 +11,31 @@
 
 ## Introduction <a id="intro" class="tall">&nbsp;</a>
 
-In this tutorial we are going to build a geo-enabled notification system based on Twitter Direct Messages. The fundamental user-story is 
+In this tutorial we are going to build a geo-enabled notification system based on Twitter Direct Messages. The _alarms_ that trigger notifications will be Tweets that are geo-tagged in an area of interest. System subscribers will privately share their locations of interest using new features of the Twitter Direct Message API, along with help of the new Account Activity API. 
 
-  _"As a Twitter user I want to receive notifications when a Twitter account of interest posts a geo-tagged Tweet that is in an area of interest."_ 
+The fundamental user-story is: _"As a Twitter user I want to receive a Direct Message when a Twitter account I follow posts a Tweet of interest geo-tagged in an area of interest."_ 
 
 Notifications will come in the form of Twitter Direct Messages, the Twitter account of interest will post Tweets associated with an exact location, and areas of interest will be defined as a 25-mile circle centered on a location shared by the Twitter user. Users will be given two methods to *privately share* their location: select a point on a map, or chose from a list of locations. For this tutorial the location lists will consist of city names, and the corresponding areas will be based on the geographic center of those cities.
 
-The fundamental goal of this tutorial is to demonstrate how to enable Twitter users to share their location of interest via a private Direct Message. The component we are building here is based on the Twitter Direct Message (DM) and Account Activity (AA) APIs. We will be referring to an *Enroller*, a webhook-based component that enables Twitter users to subscribe to the notification system. This *Enroller* is one of three components that make up the complete notification system:
+The fundamental goal of this tutorial is to demonstrate how to enable Twitter users to share their location of interest via a private Direct Message. The component we are building here is based on the Twitter Direct Message (DM) and Account Activity (AA) APIs. This component will be referred as an *Enroller*, a webhook-based component that enables Twitter users to subscribe to the system. This *Enroller* is one of three components that make up the complete notification system:
 
-  + Enroller - Webhook consumer that manages Direct Message events, both receiving messages from Twitter and also sending messages.
+  + Enroller - Webhook consumer that manages Direct Message events, both receiving messages from Twitter and also sending messages. Creates and manages subscriber-specific PowerTrack filters, which are applied to a real-time Twitter stream. 
   + Alarm listener: monitors real-time stream for Tweets of (geo) interest, triggers notification when there is a location-of-interest match.
   + Notifier: send Direct Message notifications to subscribers. 
   
-See [HERE] if you are interested in the other two components.
+See [HERE](https://github.com/jimmoffitt/FloodSocial) if you are interested in the other two components.
   
-We'll start off with a discussion on how to get started with the Twitter Direct Message and Account Activity APIs. While the Direct Message API provides the communication method, the webhook-based Account Activity API enables real-time conversations between Twitter accounts. 
+We'll start off with a discussion on how to get started with the Twitter Direct Message and Account Activity APIs. While the Direct Message API provides the communication channel, the webhook-based Account Activity API enables client-specific applications manage the real-time Twitter conversations. The Account Activity API send Direct Message events via webhooks to your web app, enabling you to build client-specific responses. Since conversations are happening with Direct Message, it is a private conservation. 
+
+<
+After building this tutorial and app, I see these new APIs as a way to build custom user interfaces right into the Twitter platform. That capability enables a lot of amazing new use-cases for the platform. 
+> 
       
 ## Getting started with the Direct Message and Account Activity APIs <a id="getting_started" class="tall">&nbsp;</a>
+
+< 
+Many moving pieces. Creating a Twitter app with Account Activity API access. Building a webhook consumer application. This consumer will receive Direct Message events from Twitter. The consumer will manage incoming events, receiving client requests and creating repsonses. 
+>
 
 A great place to start is our API documentation:
 

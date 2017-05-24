@@ -293,6 +293,18 @@ Generate Webhook ID and subscribe that and the Webhook 'event reciever' URL with
 
 
 
+### Some handy Heroku commands:
+
+You can put the app in maintenance mode, which makes it stop serving requests:
+
+heroku maintenance:on --app floodsocial
+heroku maintenance:off --app floodsocial
+
+heroku restart worker.1 
+
+heroku ps:scale web=0
+heroku ps:scale web=1
+
 
 
 

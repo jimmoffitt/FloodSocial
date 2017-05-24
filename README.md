@@ -7,3 +7,8 @@ Code for an example Twitter notification system based on subscribers sharing loc
 + /listen - the _Listener_ - Filters Twitter firehose for Tweets of interest, Tweets within areas of interest. 
   + Real-time PowerTrack stream consumer - Receives Tweets within a few seconds of being posted.  
 + /notify - the _Notifier_ - sending notification Direct Messages with latest Twitter DM API.
+
+
+
+![](https://raw.githubusercontent.com/jimmoffitt/FloodSocial/master/imgs/FloodSocial_options.png)
+

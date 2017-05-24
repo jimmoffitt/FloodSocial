@@ -79,7 +79,7 @@ class EventManager
 						elsif response == 'list'
 							puts "Retrieve current config for user #{user_id}. "
 							subscriptions = @RulesManager.get_subscriptions(user_id)
-							puts "subScriptions: #{subscriptions}"
+							puts "Subscriptions: #{subscriptions}"
 							@DMSender.send_subscription_list(user_id, subscriptions)
 						else #we have an answer to one of the above.
 							puts "UNHANDLED user response: #{response}"
@@ -91,23 +91,23 @@ class EventManager
 						request = dm_event['message_create']['message_data']['text']
 						user_id = dm_event['message_create']['sender_id']
 
-						if request.downcase.include? 'add'
+						if request.length < 100 and request.downcase.include? 'add'
 							puts 'Send QR to add an area'
 							#Send QR for which 'select area' method
 							@DMSender.send_welcome_message(user_id)
 
-						elsif request.downcase.include? 'unsubscribe' or request.downcase.include? 'quit' or request.downcase.include? 'stop'
+						elsif request.length < 100 and (request.downcase.include? 'unsubscribe' or request.downcase.include? 'quit' or request.downcase.include? 'stop')
 							puts 'unsubscribe'
 							@RulesManager.delete_subscription(user_id)
 							@DMSender.send_unsubscribe(user_id)
 
-						elsif request.downcase.include? 'list'
+						elsif request.length < 100 and request.downcase.include? 'list'
 							puts "Retrieve current config for user #{user_id}. "
 							area_names = @RulesManager.get_subscriptions(user_id)
 							puts "EventManager: left Rules manager with #{area_names}"
 							@DMSender.send_subscription_list(user_id, area_names)
 						else
-							"Listen, I only understand a few commands like: Add, List, Quit"
+							#"Listen, I only understand a few commands like: Add, List, Quit"
 						end
 					end
 				else

@@ -13,18 +13,21 @@ class APIBasicRequest
 		@keys = {}
 		
 		if File.file?(config_file)
+			puts 'Loading config file...'
 			keys = YAML::load_file(config_file)
 			@keys = keys['power_track']
 		end
-			
-		if @keys['user_name'].nil? or @keys['user_name'] == ''
-			@keys['user_name'] = ENV['GNIP_USER_NAME']
-			@keys['password'] = ENV['GNIP_PASSWORD']
-			@key['account_name'] = ENV['GNIP_ACCOUNT_NAME']
-			@keys['label'] = ENV['GNIP_LABEL']
+		
+		if @keys.empty?
+			puts "Pulling from ENV[]"
+			if @keys['user_name'].nil? or @keys['user_name'] == ''
+				@keys['user_name'] = ENV['GNIP_USER_NAME']
+				@keys['password'] = ENV['GNIP_PASSWORD']
+				@key['account_name'] = ENV['GNIP_ACCOUNT_NAME']
+				@keys['label'] = ENV['GNIP_LABEL']
+			end
 		end
 		
-
 		@url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{@keys['account_name']}/publishers/twitter/#{@keys['label']}.json"
 
 	end
@@ -281,6 +284,7 @@ if __FILE__ == $0 #This script code is executed when running this file.
 	sources = []
 	sources << 'USGS_TexasFlood'
 	sources << 'USGS_TexasRain'
+	sources << 'snowman'
 	long = -87.0000
 	lat = 45.0000
 	user_id = 17200032

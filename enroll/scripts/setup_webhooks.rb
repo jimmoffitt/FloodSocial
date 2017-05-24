@@ -132,6 +132,8 @@ class TaskManager
 		puts uri_path
 		
 		response = @twitter_api.make_put_request(uri_path)
+		
+		puts response
 
 		if response == '204'
 			puts "CRC request successful and webhook status set to valid."
@@ -140,7 +142,7 @@ class TaskManager
 		end
 
 		response
-		
+
 	end
 
 end

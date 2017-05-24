@@ -10,5 +10,5 @@ Code for an example Twitter notification system based on subscribers sharing loc
 
 
 
-![](https://raw.githubusercontent.com/jimmoffitt/FloodSocial/master/imgs/FloodSocial_options.png)
+![](https://raw.githubusercontent.com/jimmoffitt/FloodSocial/master/imgs/floodsocial_options.png)
 

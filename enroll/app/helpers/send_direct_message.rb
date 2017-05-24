@@ -50,11 +50,13 @@ class SendDirectMessage
 	#Send a DM back to user.
 	#https://dev.twitter.com/rest/reference/post/direct_messages/events/new
 	def send_direct_message(message)
-		puts "Sending Direct Message ==================================================="
-		puts "Sending #{message} to #{@dm.uri_path}/events/new.json"
+		puts "==|||== Sending Direct Message =|||==============================================="
+		
 
 		uri_path = "#{@dm.uri_path}/events/new.json"
 		response = @dm.make_post_request(uri_path, message)
+
+		puts "Attempted to send #{message} to #{uri_path}/events/new.json"
 		
 		puts "SEND: response: #{response}"
 

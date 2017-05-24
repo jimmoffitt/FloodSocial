@@ -58,7 +58,7 @@ class SendDirectMessage
 		
 		puts "SEND: response: #{response}"
 
-		results = JSON.parse(response)
+		#results = JSON.parse(response)
 
 		results
 

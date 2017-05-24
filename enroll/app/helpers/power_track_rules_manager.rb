@@ -17,7 +17,7 @@ class APIBasicRequest
 			@keys = keys['power_track']
 		end
 			
-		if @keys['user_name'].nil? or @keys['user_name'] == '' 
+		if @keys['user_name'].nil? or @keys['user_name'] == ''
 			@keys['user_name'] = ENV['GNIP_USER_NAME']
 			@keys['password'] = ENV['GNIP_PASSWORD']
 			@key['account_name'] = ENV['GNIP_ACCOUNT_NAME']

@@ -28,7 +28,10 @@ class ApiOauthRequest
 		if File.file?(config)
 			keys = YAML::load_file(config)
 			@keys = keys['dm_api']
-		else
+		end
+			
+		if @keys['consumer_key'].nil? or @key['consumer_key'] == ''
+			puts "Pulling from ENV[]"
 			@keys['consumer_key'] = ENV['CONSUMER_KEY']
 			@keys['consumer_secret'] = ENV['CONSUMER_SECRET']
 			@keys['access_token'] = ENV['ACCESS_TOKEN']

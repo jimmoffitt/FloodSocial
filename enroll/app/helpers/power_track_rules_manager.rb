@@ -15,7 +15,9 @@ class APIBasicRequest
 		if File.file?(config_file)
 			keys = YAML::load_file(config_file)
 			@keys = keys['power_track']
-		else
+		end
+			
+		if @keys['user_name'].nil? or @keys['user_name'] == '' 
 			@keys['user_name'] = ENV['GNIP_USER_NAME']
 			@keys['password'] = ENV['GNIP_PASSWORD']
 			@key['account_name'] = ENV['GNIP_ACCOUNT_NAME']

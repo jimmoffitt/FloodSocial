@@ -25,9 +25,12 @@ class SendDirectMessage
 		@dm.get_api_access
 
 		@content = GenerateDirectMessageContent.new
+		
+		puts "In SEND: APP_ROOT: #{APP_ROOT}"
 
 		begin
 			locations = CSV.read(File.join(APP_ROOT, 'data', 'placesOfInterest.csv'))
+			puts "Locations: #{locations}"
 		rescue #Running outside of Sinatra?
 			locations = CSV.read('../../data/placesOfInterest.csv')
 		end
@@ -52,6 +55,8 @@ class SendDirectMessage
 
 		uri_path = "#{@dm.uri_path}/events/new.json"
 		response = @dm.make_post_request(uri_path, message)
+		
+		puts "SEND: response: #{response}"
 
 		results = JSON.parse(response)
 

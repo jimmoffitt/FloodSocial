@@ -1,6 +1,6 @@
 # FloodSocial
 
-Code for an example Twitter notification system based on subscribers sharing locations of interest.
+Code for an example Twitter notification system based on subscribers sharing locations of interest. When those areas match on geo-tagged Tweets of interest, a Direct Message is sent to the subscriber.
 
 + /enroll - the _Enroller_ - Twitter Account Activity Webhook consumer, subscribers share location privately.
   + PowerTrack Rules Manager - Creates and manages subscriber-specific PowerTrack filters. 

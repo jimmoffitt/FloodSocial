@@ -256,11 +256,13 @@ class PowerTrackRulesManager
 		rules = get_rules
 
 		area_names = []
-
-		rules.each do |rule|
-			if rule['tag'].include?(user_id.to_s)
-				#puts "HAVE MATCH"
-				area_names << get_area_name_from_tag(rule)
+		
+		if !rules.nil?
+			rules.each do |rule|
+				if rule['tag'].include?(user_id.to_s)
+					#puts "HAVE MATCH"
+					area_names << get_area_name_from_tag(rule)
+				end
 			end
 		end
 

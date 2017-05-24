@@ -6,27 +6,26 @@ class ApiOauthRequest
 
 	HEADERS = {"content-type" => "application/json"} #Suggested set? Any?
 
-	attr_accessor :consumer_name,
-	              :keys,
+	attr_accessor :keys,
 	              :twitter_api,
 	              :base_url, #Default: 'https://api.twitter.com/'
 	              :uri_path #No default.
 
-	def initialize(config_file)
+	def initialize(config_file=nil)
 		@base_url = 'https://api.twitter.com/'
 		@uri_path = '' #'/1.1/direct_messages' or '/1.1/account_activity'
 
-		@consumer_name = "Enroller for Twitter geo-based notification system."
-
 		if config_file.nil?
-			config = '../config/config.yaml'
+			config = '../../config/config.yaml'
 		else
 			config = config_file
 		end
-
+		
+		#Get Twitter App keys and tokens. Read from 'config.yaml' if provided, or if running on Heroku, pull from the 
+		#'Config Variables' via the ENV{} hash/
 		@keys = {}
 
-		if File.file?(config_file)
+		if File.file?(config)
 			keys = YAML::load_file(config)
 			@keys = keys['dm_api']
 		else
@@ -50,28 +49,34 @@ class ApiOauthRequest
 	def make_post_request(uri_path, request)
 		get_api_access if @twitter_api.nil? #token timeout?
 
-		puts "Request: #{request}"
+		response = @twitter_api.post(uri_path, request, HEADERS)
 
-		result = @twitter_api.post(uri_path, request, HEADERS)
-
-		if result.code.to_i >= 300
-			puts "error: #{result}"
-			puts "ERROR CODE: #{result.code}"
+		if response.code.to_i >= 300
+			puts "error: #{response}"
 		end
 
-		result.body
+		if response.body.nil? #Some successful API calls have nil response bodies, but have 2## response codes.
+			 return response.code #Examples include 'set subscription', 'get subscription', and 'delete subscription'
+		else
+			return response.body
+		end
+
 	end
 
 	def make_get_request(uri_path)
 		get_api_access if @twitter_api.nil? #token timeout?
 
-		result = @twitter_api.get(uri_path, HEADERS)
-
-		if result.code.to_i >= 300
-			puts "error: #{result}"
+		response = @twitter_api.get(uri_path, HEADERS)
+		
+		if response.code.to_i >= 300
+			puts "error: #{response}"
 		end
 
-		result.body
+		if response.body.nil? #Some successful API calls have nil response bodies, but have 2## response codes.
+			return response.code #Examples include 'set subscription', 'get subscription', and 'delete subscription'
+		else
+			return response.body
+		end
 	end
 
 	def make_delete_request(uri_path)
@@ -83,7 +88,11 @@ class ApiOauthRequest
 			puts "error: #{response}"
 		end
 
-		response.body
+		if response.body.nil? #Some successful API calls have nil response bodies, but have 2## response codes.
+			return response.code #Examples include 'set subscription', 'get subscription', and 'delete subscription'
+		else
+			return response.body
+		end
 	end
 
 	def make_put_request(uri_path)
@@ -92,17 +101,19 @@ class ApiOauthRequest
 
 		response = @twitter_api.put(uri_path, '', {"content-type" => "application/json"})
 
-
 		if response.code.to_i == 429
-			puts "#{response.message} Rate limited... Handle!"
+			puts "#{response.message}  - Rate limited..."
 		end
-
 
 		if response.code.to_i >= 300
 			puts "error: #{response}"
 		end
 
-		response.body
+		if response.body.nil? #Some successful API calls have nil response bodies, but have 2## response codes.
+			return response.code #Examples include 'set subscription', 'get subscription', and 'delete subscription'
+		else
+			return response.body
+		end
 
 	end
 

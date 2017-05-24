@@ -1,70 +1,19 @@
 class GenerateDirectMessageContent
 
-	def generate_welcome_message_default
 
-		welcome_message = "Welcome to a Twitter Direct Message notification system. This system is developed to work with any account that posts geo-tagged Tweets, and is currently using the @USGS_TexasFlood and @USGS_TexasRain Twitter accounts as the 'source' data.
-                         \n After sharing your location of interest, you will receive a Direct Message notification when ever the source Twitter account posts a Tweet from that area.
-                         \n If you have already enrolled, you can select additional areas of interest. Send a 'list' Direct Message to review your areas of interest.
-                         \n If you want to unsubscribe, select that option or send a 'quit' or 'stop' or 'unsubscribe' Direct Message. "
+	def generate_greeting
 
-		message = {}
-		message['welcome_message'] = {}
-		message['welcome_message']['message_data'] = {}
-		message['welcome_message']['message_data']['text'] = welcome_message
-
-		quick_reply = {}
-		quick_reply['type'] = 'options'
-		quick_reply['options'] = []
-
-		option = {}
-		option['label'] = 'Pick area of interest from list'
-		option['description'] = 'Enroll by selecting a single area of interest from list'
-		option['metadata'] = 'pick_from_list'
-		quick_reply['options'] << option
-
-		option = {}
-		option['label'] = 'Pick area of interest from map'
-		option['description'] = 'Enroll by selecting location of interest using a map'
-		option['metadata'] = 'select_on_map'
-		quick_reply['options'] << option
-
-		option = {}
-		option['label'] = 'Learn more about this system'
-		option['description'] = 'Select a single area of interest from list'
-		option['metadata'] = 'learn_more'
-		quick_reply['options'] << option
-
-		option = {}
-		option['label'] = 'Unsubscribe'
-		option['description'] = 'Unsubscribe from notification system'
-		option['metadata'] = 'unsubscribe'
-		quick_reply['options'] << option
-
-		message['welcome_message']['message_data']['quick_reply'] = quick_reply
-
-		message.to_json
-
-	end
-
-	#Users are shown this after returning from 'show info' option... A way to serve to other 're-started' dialogs?
-	#https://dev.twitter.com/rest/reference/post/direct_messages/welcome_messages/new
-	def generate_welcome_message(recipient_id)
-
-		welcome_message = "After sharing your location of interest, you will receive a Direct Message notification when ever the source Twitter account posts a Tweet from that area.
+		greeting = "Welcome to a Twitter Direct Message notification system. This system is developed to work with any account that posts geo-tagged Tweets, and is currently using the @USGS_TexasFlood and                        @USGS_TexasRain Twitter accounts as the 'source' data.
+                         \n After sharing your location of interest, you will receive a Direct Message notification whenever the source Twitter account posts a Tweet from that area.
                          \n If you have already enrolled, you can select additional areas of interest by sending an 'add' Direct Message.
                          \n Send a 'list' Direct Message to review your areas of interest.
                          \n If you want to unsubscribe, select that option or send a 'quit' or 'stop' or 'unsubscribe' Direct Message. "
+		greeting
 
-		event = {}
-		event['event'] = {}
-		event['event']['type'] = 'message_create'
-		event['event']['message_create'] = {}
-		event['event']['message_create']['target'] = {}
-		event['event']['message_create']['target']['recipient_id'] = "#{recipient_id}"
-
-		message_data = {}
-		message_data['text'] = welcome_message
-
+	end
+	
+	
+	def generate_options_menu
 		quick_reply = {}
 		quick_reply['type'] = 'options'
 		quick_reply['options'] = []
@@ -98,8 +47,41 @@ class GenerateDirectMessageContent
 		option['description'] = 'Unsubscribe from notification system'
 		option['metadata'] = 'unsubscribe'
 		quick_reply['options'] << option
+		
+		quick_reply
+	end
+	
+	
+	#New users will be served this.
+	#https://dev.twitter.com/rest/reference/post/direct_messages/welcome_messages/new
+	def generate_welcome_message_default
 
-		message_data['quick_reply'] = quick_reply
+		message = {}
+		message['welcome_message'] = {}
+		message['welcome_message']['message_data'] = {}
+		message['welcome_message']['message_data']['text'] = generate_greeting
+
+		message['welcome_message']['message_data']['quick_reply'] = generate_options_menu
+
+		message.to_json
+
+	end
+
+	#Users are shown this after returning from 'show info' option... A way to serve to other 're-started' dialogs?
+	#https://dev.twitter.com/rest/reference/post/direct_messages/welcome_messages/new
+	def generate_welcome_message(recipient_id)
+
+		event = {}
+		event['event'] = {}
+		event['event']['type'] = 'message_create'
+		event['event']['message_create'] = {}
+		event['event']['message_create']['target'] = {}
+		event['event']['message_create']['target']['recipient_id'] = "#{recipient_id}"
+
+		message_data = {}
+		message_data['text'] = generate_greeting
+
+		message_data['quick_reply'] = generate_options_menu
 
 		event['event']['message_create']['message_data'] = message_data
 

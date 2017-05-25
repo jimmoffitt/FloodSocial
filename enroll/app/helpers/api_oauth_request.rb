@@ -37,7 +37,7 @@ class ApiOauthRequest
 			@keys['access_token_secret'] = ENV['ACCESS_TOKEN_SECRET']
 		end
 
-		puts "@keys: #{@key}"
+		puts "@keys for OAuth: #{@key}"
 		
 	end
 
@@ -57,7 +57,7 @@ class ApiOauthRequest
 		response = @twitter_api.post(uri_path, request, HEADERS)
 
 		if response.code.to_i >= 300
-			puts "error: #{response}"
+			puts "error code: #{response.code} #{response}"
 		end
 
 		if response.body.nil? #Some successful API calls have nil response bodies, but have 2## response codes.

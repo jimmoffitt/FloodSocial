@@ -32,7 +32,7 @@ class APIBasicRequest
 			@keys['label'] = ENV['GNIP_LABEL']
 		end
 
-		puts "@keys: #{@key}"
+		puts "@keys for power track: #{@key}"
 		
 		@url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{@keys['account_name']}/publishers/twitter/#{@keys['label']}.json"
 		puts "@url=#{@url}"
@@ -125,7 +125,7 @@ class PowerTrackRulesManager
 	              :radius
 
 	def initialize
-		
+
 		#Create HTTP RESTful object for making requests.
 		@http = APIBasicRequest.new()
 

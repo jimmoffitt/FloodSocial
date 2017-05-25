@@ -50,8 +50,7 @@ class SendDirectMessage
   	puts "Attempted to send #{message} to #{uri_path}/events/new.json"
 	
 		#Currently, not returning anything... Errors reported in POST request code.
-		results = JSON.parse(response)
-		results
+		response
 
 	end
 

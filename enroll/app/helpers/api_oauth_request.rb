@@ -29,13 +29,17 @@ class ApiOauthRequest
 			keys = YAML::load_file(config)
 			@keys = keys['dm_api']
 		end
+		
+		puts "@keys: #{@key}"
 			
-		if @keys['consumer_key'].nil? or @key['consumer_key'] == ''
-			puts "Pulling from ENV[]"
-			@keys['consumer_key'] = ENV['CONSUMER_KEY']
-			@keys['consumer_secret'] = ENV['CONSUMER_SECRET']
-			@keys['access_token'] = ENV['ACCESS_TOKEN']
-			@keys['access_token_secret'] = ENV['ACCESS_TOKEN_SECRET']
+		if @keys.empty? 
+			if @keys['consumer_key'].nil? or @key['consumer_key'] == ''
+				puts "Pulling from ENV[]"
+				@keys['consumer_key'] = ENV['CONSUMER_KEY']
+				@keys['consumer_secret'] = ENV['CONSUMER_SECRET']
+				@keys['access_token'] = ENV['ACCESS_TOKEN']
+				@keys['access_token_secret'] = ENV['ACCESS_TOKEN_SECRET']
+			end
 		end
 	end
 
@@ -57,9 +61,6 @@ class ApiOauthRequest
 		if response.code.to_i >= 300
 			puts "error: #{response}"
 		end
-		
-		puts "response.code: #{response.code}"
-		puts "response.body: #{response.body}"
 
 		if response.body.nil? #Some successful API calls have nil response bodies, but have 2## response codes.
 			 return response.code #Examples include 'set subscription', 'get subscription', and 'delete subscription'

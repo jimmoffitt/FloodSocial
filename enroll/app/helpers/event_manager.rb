@@ -42,7 +42,7 @@ class EventManager
 						response = dm_event['message_create']['message_data']['quick_reply_response']['metadata']
 						user_id = dm_event['message_create']['sender_id']
 
-						puts "User #{user_id} answered with #{response}"
+						#puts "User #{user_id} answered with #{response}"
 
 						if response == 'learn_more'
 							@DMSender.send_system_info(user_id)

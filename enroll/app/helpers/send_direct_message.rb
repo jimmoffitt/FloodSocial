@@ -14,7 +14,6 @@ class SendDirectMessage
 
 		#@dm = ApiRequest.new('../../config/accounts_private.yaml') #this context does not work within Sinatra app...?
 
-
 		begin
 			@dm = ApiOauthRequest.new(File.join(APP_ROOT, 'config', 'config.yaml'))
 		rescue #Running outside of Sinatra?
@@ -26,11 +25,10 @@ class SendDirectMessage
 
 		@content = GenerateDirectMessageContent.new
 		
-		puts "In SEND: APP_ROOT: #{APP_ROOT}"
+		#puts "In SEND: APP_ROOT: #{APP_ROOT}"
 
 		begin
 			locations = CSV.read(File.join(APP_ROOT, 'data', 'placesOfInterest.csv'))
-			puts "Locations: #{locations}"
 		rescue #Running outside of Sinatra?
 			locations = CSV.read('../../data/placesOfInterest.csv')
 		end
@@ -50,18 +48,14 @@ class SendDirectMessage
 	#Send a DM back to user.
 	#https://dev.twitter.com/rest/reference/post/direct_messages/events/new
 	def send_direct_message(message)
-		puts "==|||== Sending Direct Message =|||==============================================="
 		
-
 		uri_path = "#{@dm.uri_path}/events/new.json"
 		response = @dm.make_post_request(uri_path, message)
-
-		puts "Attempted to send #{message} to #{uri_path}/events/new.json"
-		
-		puts "SEND: response: #{response}"
-
+  	puts "Attempted to send #{message} to #{uri_path}/events/new.json"
+	
+		#Currently, not returning anything... Errors reported in POST request code.
 		#results = JSON.parse(response)
-		#results
+		#results 
 
 	end
 
@@ -69,11 +63,6 @@ class SendDirectMessage
 		puts "(Re)send welcome message"
 		dm_content = @content.generate_welcome_message(user_id)
 		send_direct_message(dm_content)
-	end
-
-	def send_select_location_method_dm(user_id)
-		puts "(Re)send welcome message"
-
 	end
 
 	def send_map(user_id)

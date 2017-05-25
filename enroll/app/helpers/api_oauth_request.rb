@@ -11,7 +11,7 @@ class ApiOauthRequest
 	              :base_url, #Default: 'https://api.twitter.com/'
 	              :uri_path #No default.
 
-	def initialize(config_file=nil)
+	def initialize(config_file = nil)
 		@base_url = 'https://api.twitter.com/'
 		@uri_path = '' #'/1.1/direct_messages' or '/1.1/account_activity'
 
@@ -26,21 +26,19 @@ class ApiOauthRequest
 		@keys = {}
 
 		if File.file?(config)
+			puts "Pulling from #{config_file}"
 			keys = YAML::load_file(config)
 			@keys = keys['dm_api']
+		else
+			puts "Pulling from ENV[]"
+			@keys['consumer_key'] = ENV['CONSUMER_KEY']
+			@keys['consumer_secret'] = ENV['CONSUMER_SECRET']
+			@keys['access_token'] = ENV['ACCESS_TOKEN']
+			@keys['access_token_secret'] = ENV['ACCESS_TOKEN_SECRET']
 		end
-		
+
 		puts "@keys: #{@key}"
-			
-		if @keys.empty? 
-			if @keys['consumer_key'].nil? or @key['consumer_key'] == ''
-				puts "Pulling from ENV[]"
-				@keys['consumer_key'] = ENV['CONSUMER_KEY']
-				@keys['consumer_secret'] = ENV['CONSUMER_SECRET']
-				@keys['access_token'] = ENV['ACCESS_TOKEN']
-				@keys['access_token_secret'] = ENV['ACCESS_TOKEN_SECRET']
-			end
-		end
+		
 	end
 
 	def get_api_access

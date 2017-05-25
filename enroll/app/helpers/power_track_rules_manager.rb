@@ -9,26 +9,30 @@ class APIBasicRequest
 	def initialize(config_file)
 
 		#Load configuration.
-		
+
+		if config_file.nil?
+			config = '../../config/config_private.yaml'
+		else
+			config = config_file
+		end
+
+		#Get Twitter App keys and tokens. Read from 'config.yaml' if provided, or if running on Heroku, pull from the
+		#'Config Variables' via the ENV{} hash/
 		@keys = {}
 
-		if File.file?(config_file)
-			puts 'Loading config file...'
-			keys = YAML::load_file(config_file)
+		if File.file?(config)
+			puts "Pulling from #{config_file}"
+			keys = YAML::load_file(config)
 			@keys = keys['power_track']
+		else
+			puts "Pulling from ENV[]"
+			@keys['account_name'] = ENV['GNIP_ACCOUNT_NAME']
+			@keys['user_name'] = ENV['GNIP_USER_NAME']
+			@keys['password'] = ENV['GNIP_PASSWORD']
+			@keys['label'] = ENV['GNIP_LABEL']
 		end
 
 		puts "@keys: #{@key}"
-		
-		if @keys.empty?
-			puts "Pulling from ENV[]"
-			if @keys['user_name'].nil? or @keys['user_name'] == ''
-				@keys['user_name'] = ENV['GNIP_USER_NAME']
-				@keys['password'] = ENV['GNIP_PASSWORD']
-				@key['account_name'] = ENV['GNIP_ACCOUNT_NAME']
-				@keys['label'] = ENV['GNIP_LABEL']
-			end
-		end
 		
 		@url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{@keys['account_name']}/publishers/twitter/#{@keys['label']}.json"
 		puts "@url=#{@url}"

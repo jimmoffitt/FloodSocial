@@ -12,7 +12,7 @@ class EnrollerApp < Sinatra::Base
 	end
 
 	#Load authentication details
-	config_file = File.join(File.dirname(__FILE__), '../../config/config.yaml')
+	config_file = File.join(File.dirname(__FILE__), '../../config/config_private.yaml')
 	keys = {}
 	
 	if File.file?(config_file)

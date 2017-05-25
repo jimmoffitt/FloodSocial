@@ -14,11 +14,7 @@ class SendDirectMessage
 
 		#@dm = ApiRequest.new('../../config/accounts_private.yaml') #this context does not work within Sinatra app...?
 
-		begin
-			@dm = ApiOauthRequest.new(File.join(APP_ROOT, 'config', 'config_private.yaml'))
-		rescue #Running outside of Sinatra?
-			@dm = ApiOauthRequest.new('../../config/config_private.yaml')
-		end
+		@dm = ApiOauthRequest.new
 
 		@dm.uri_path = '/1.1/direct_messages'
 		@dm.get_api_access

@@ -54,14 +54,15 @@ class SendDirectMessage
   	puts "Attempted to send #{message} to #{uri_path}/events/new.json"
 	
 		#Currently, not returning anything... Errors reported in POST request code.
-		#results = JSON.parse(response)
-		#results 
+		results = JSON.parse(response)
+		results 
 
 	end
 
 	def send_welcome_message(user_id)
 		puts "(Re)send welcome message"
 		dm_content = @content.generate_welcome_message(user_id)
+		puts "Sending #{dm_content} to #{user_id} "
 		send_direct_message(dm_content)
 	end
 

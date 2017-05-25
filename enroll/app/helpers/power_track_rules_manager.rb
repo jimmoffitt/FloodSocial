@@ -17,6 +17,8 @@ class APIBasicRequest
 			keys = YAML::load_file(config_file)
 			@keys = keys['power_track']
 		end
+
+		puts "@keys: #{@key}"
 		
 		if @keys.empty?
 			puts "Pulling from ENV[]"
@@ -143,6 +145,7 @@ class PowerTrackRulesManager
 	end
 
 	def get_rules
+		puts "GETTING Rules..."
 		response = @http.GET
 		rules = JSON.parse(response.body)
 		rules['rules']

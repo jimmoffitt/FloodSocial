@@ -41,8 +41,13 @@ class EnrollerApp < Sinatra::Base
 
 	get '/' do
 		"Welcome to the @FloodSocial notification system! <br>
-          This websocket component is used for enrolling subscribers into a Twitter-based notification system. <br>
-          This component is a consumer of Account Activity API events."
+          This websocket component is used for enrolling subscribers into a geo-aware, Twitter-based notification system. <br>
+          This component is a consumer of Account Activity API events.<br><br>
+          This demo is currently listening to @USGS_TexasFlood and @USGS_TexasRain for Tweets of interest.<br>
+          However, this system can be tied to any Twitter account that posts geo-tagged Tweets<br><br>
+          A take a tour of the demo by sending a Direct Message to @FloodSocial. <br>
+          Pro Tip: pick an area (with map) outside of Texas and you'll never receive a notification.
+    "
 	end
 
 	# Receives challenge response check (CRC).

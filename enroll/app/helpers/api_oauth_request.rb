@@ -16,7 +16,7 @@ class ApiOauthRequest
 		@uri_path = '' #'/1.1/direct_messages' or '/1.1/account_activity'
 
 		if config_file.nil?
-			config = '../../config/config.yaml'
+			config = '../../config/config_private.yaml'
 		else
 			config = config_file
 		end

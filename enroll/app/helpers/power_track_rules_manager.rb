@@ -11,7 +11,7 @@ class APIBasicRequest
 		#Load configuration.
 		
 		@keys = {}
-		
+
 		if File.file?(config_file)
 			puts 'Loading config file...'
 			keys = YAML::load_file(config_file)
@@ -122,7 +122,7 @@ class PowerTrackRulesManager
 	              :radius
 
 	def initialize
-		config = File.join(APP_ROOT, 'config', 'config.yaml')
+		config = File.join(APP_ROOT, 'config', 'config_private.yaml')
 
 		#Load config parameters.
 		keys = YAML::load_file(config)

@@ -29,6 +29,7 @@ class APIBasicRequest
 		end
 		
 		@url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{@keys['account_name']}/publishers/twitter/#{@keys['label']}.json"
+		puts "@url=#{@url}"
 
 	end
 

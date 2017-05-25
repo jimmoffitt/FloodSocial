@@ -6,7 +6,7 @@ class APIBasicRequest
 
 	attr_accessor :url, :uri, :keys, :headers, :data
 
-	def initialize(config_file)
+	def initialize(config_file = nil)
 
 		#Load configuration.
 
@@ -120,20 +120,14 @@ class PowerTrackRulesManager
 	require 'json'
 	require 'csv'
 
-	attr_accessor :keys,
-	              :source,
+	attr_accessor :source,
 	              :locations,
 	              :radius
 
 	def initialize
-		config = File.join(APP_ROOT, 'config', 'config_private.yaml')
-
-		#Load config parameters.
-		keys = YAML::load_file(config)
-		@keys = keys['power_track']
-
+		
 		#Create HTTP RESTful object for making requests.
-		@http = APIBasicRequest.new(config)
+		@http = APIBasicRequest.new()
 
 		#TODO - add feature to make point raduis distance customizable?
 		@radius = 25

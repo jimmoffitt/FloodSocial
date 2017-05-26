@@ -47,7 +47,7 @@ class SendDirectMessage
 		
 		uri_path = "#{@dm.uri_path}/events/new.json"
 		response = @dm.make_post_request(uri_path, message)
-  	puts "Attempted to send #{message} to #{uri_path}/events/new.json"
+  	#puts "Attempted to send #{message} to #{uri_path}/events/new.json"
 	
 		#Currently, not returning anything... Errors reported in POST request code.
 		response
@@ -57,7 +57,7 @@ class SendDirectMessage
 	def send_welcome_message(user_id)
 		puts "(Re)send welcome message"
 		dm_content = @content.generate_welcome_message(user_id)
-		puts "Sending #{dm_content} to #{user_id} "
+		#puts "Sending #{dm_content} to #{user_id} "
 		send_direct_message(dm_content)
 	end
 
@@ -82,6 +82,12 @@ class SendDirectMessage
 	def send_system_info(user_id)
 		puts "Sending system info."
 		dm_content = @content.generate_system_info(user_id)
+		send_direct_message(dm_content)
+	end
+	
+	def send_system_help(user_id)
+		puts "Sending system help message"
+		dm_content = @content.generate_system_help(user_id)
 		send_direct_message(dm_content)
 	end
 

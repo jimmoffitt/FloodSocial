@@ -7,7 +7,10 @@ require_relative 'send_direct_message'
 require_relative 'power_track_rules_manager'
 
 class EventManager
+	@@previous_event_id = 0
 
+	COMMAND_MESSAGE_LIMIT = 100	#Simplistic way to detect an incoming, short, 'commmand' DM.
+	
 	attr_accessor :DMsender, :RulesManager
 
 	def initialize
@@ -23,7 +26,7 @@ class EventManager
 
 	def handle_event(events)
 
-		puts "Event handler processing: #{events}"
+		#puts "Event handler processing: #{events}"
 
 		events = JSON.parse(events)
 
@@ -32,6 +35,8 @@ class EventManager
 			dm_events = events['direct_message_events']
 
 			dm_events.each do |dm_event|
+				
+				#puts "id: #{@@previous_event_id}"
 
 				if dm_event['type'] == 'message_create'
 
@@ -44,7 +49,9 @@ class EventManager
 
 						#puts "User #{user_id} answered with #{response}"
 
-						if response == 'learn_more'
+						if response == 'help'
+							@DMSender.send_system_help(user_id)
+						elsif response == 'learn_more'
 							@DMSender.send_system_info(user_id)
 						elsif response == 'return_to_system'
 							@DMSender.send_welcome_message(user_id)
@@ -79,8 +86,12 @@ class EventManager
 						elsif response == 'list'
 							puts "Retrieve current config for user #{user_id}. "
 							subscriptions = @RulesManager.get_subscriptions(user_id)
-							puts "Subscriptions: #{subscriptions}"
+							#puts "Subscriptions: #{subscriptions}"
 							@DMSender.send_subscription_list(user_id, subscriptions)
+						elsif response == 'unsubscribe'
+							puts 'unsubscribe'
+							@RulesManager.delete_subscription(user_id)
+							@DMSender.send_unsubscribe(user_id)
 						else #we have an answer to one of the above.
 							puts "UNHANDLED user response: #{response}"
 						end
@@ -91,21 +102,30 @@ class EventManager
 						request = dm_event['message_create']['message_data']['text']
 						user_id = dm_event['message_create']['sender_id']
 
-						if request.length < 100 and request.downcase.include? 'add'
+						if request.length < COMMAND_MESSAGE_LIMIT and (request.downcase.include? 'add' or request.downcase.include? 'main' or request.downcase.include? 'hello')
 							puts 'Send QR to add an area'
 							#Send QR for which 'select area' method
 							@DMSender.send_welcome_message(user_id)
 
-						elsif request.length < 100 and (request.downcase.include? 'unsubscribe' or request.downcase.include? 'quit' or request.downcase.include? 'stop')
+						elsif request.length < COMMAND_MESSAGE_LIMIT and (request.downcase.include? 'unsubscribe' or request.downcase.include? 'quit' or request.downcase.include? 'stop')
 							puts 'unsubscribe'
 							@RulesManager.delete_subscription(user_id)
 							@DMSender.send_unsubscribe(user_id)
 
-						elsif request.length < 100 and request.downcase.include? 'list'
+						elsif request.length < COMMAND_MESSAGE_LIMIT and request.downcase.include? 'list'
 							puts "Retrieve current config for user #{user_id}. "
 							area_names = @RulesManager.get_subscriptions(user_id)
-							puts "EventManager: left Rules manager with #{area_names}"
+							#puts "EventManager: left Rules manager with #{area_names}"
 							@DMSender.send_subscription_list(user_id, area_names)
+							
+						elsif request.length < COMMAND_MESSAGE_LIMIT and (request.downcase.include? 'about')
+							puts "Send 'learn more' content"
+							@DMSender.send_system_info(user_id)
+						elsif request.length < COMMAND_MESSAGE_LIMIT and (request.downcase.include? 'help')
+							puts "Send 'help' content"
+							@DMSender.send_system_help(user_id)
+							
+							
 						else
 							#"Listen, I only understand a few commands like: Add, List, Quit"
 						end

@@ -135,8 +135,139 @@ After you have navigated past the Welcome Message you can send 'command' Direct 
 	end
   ```
 
-+ Using DM API, create Default Welcome Message
++ Using DM API, create Welcome Message
+
+```json
+{
+  "welcome_message": {
+    "message_data": {
+      "text": "Welcome. This system is developed to work with any account that posts geo-tagged Tweets, and is currently using the @USGS_TexasFlood and @USGS_TexasRain Twitter accounts as the 'source' data.\n\nAfter sharing your location of interest, you will receive a Direct Message notification whenever a source Twitter account posts a Tweet from that area.                         ",
+      "quick_reply": {
+        "type": "options",
+        "options": [
+          {
+            "label": "Pick area of interest from list",
+            "description": "Enroll by selecting a single area of interest from list",
+            "metadata": "pick_from_list"
+          },
+          {
+            "label": "Pick area of interest from map",
+            "description": "Enroll by selecting location of interest using a map",
+            "metadata": "select_on_map"
+          },
+          {
+            "label": "List current area(s) of interest",
+            "description": "Show current areas of interest",
+            "metadata": "list"
+          },
+          {
+            "label": "Learn more about this system",
+            "description": "See a detailed system description and links to related information",
+            "metadata": "learn_more"
+          },
+          {
+            "label": "Help",
+            "description": "Help with system commands",
+            "metadata": "help"
+          },
+          {
+            "label": "Unsubscribe",
+            "description": "Unsubscribe from notification system",
+            "metadata": "unsubscribe"
+          }
+        ]
+      }
+    }
+  }
+}
+
+```
+
+Response:
+
+```json
+{
+  "welcome_message": {
+    "id": "868179877014290436",
+    "created_timestamp": "1495825187339",
+    "message_data": {
+      "text": "Welcome. This system is developed to work with any account that posts geo-tagged Tweets, and is currently using the @USGS_TexasFlood and @USGS_TexasRain Twitter accounts as the 'source' data.\n\nAfter sharing your location of interest, you will receive a Direct Message notification whenever a source Twitter account posts a Tweet from that area.",
+      "entities": {
+        "hashtags": [
+          
+        ],
+        "symbols": [
+          
+        ],
+        "user_mentions": [
+          {
+            "screen_name": "USGS_TexasFlood",
+            "name": "USGS TX FloodWatch",
+            "id": 7.1520957480278e+17,
+            "id_str": "715209574802784256",
+            "indices": [
+              116,
+              132
+            ]
+          },
+          {
+            "screen_name": "USGS_TexasRain",
+            "name": "USGS TX RainWatch",
+            "id": 7.1521146495332e+17,
+            "id_str": "715211464953319424",
+            "indices": [
+              137,
+              152
+            ]
+          }
+        ],
+        "urls": [
+          
+        ]
+      },
+      "quick_reply": {
+        "type": "options",
+        "options": [
+          {
+            "label": "Pick area of interest from list",
+            "metadata": "pick_from_list",
+            "description": "Enroll by selecting a single area of interest from list"
+          },
+          {
+            "label": "Pick area of interest from map",
+            "metadata": "select_on_map",
+            "description": "Enroll by selecting location of interest using a map"
+          },
+          {
+            "label": "List current area(s) of interest",
+            "metadata": "list",
+            "description": "Show current areas of interest"
+          },
+          {
+            "label": "Learn more about this system",
+            "metadata": "learn_more",
+            "description": "See a detailed system description and links to related information"
+          },
+          {
+            "label": "Help",
+            "metadata": "help",
+            "description": "Help with system commands"
+          },
+          {
+            "label": "Unsubscribe",
+            "metadata": "unsubscribe",
+            "description": "Unsubscribe from notification system"
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
 + Using AA API, add subscriber (webhook ID).
+
+
 
 
 
@@ -169,6 +300,11 @@ end
 
 If not, webhook events will cease. While you are developing your webhook consumer you will need a tool that initiates a CRC check. During development it is likely that your web app will not be running during a Twitter challenge, and you'll need to trigger a challenge so you can re-establish webhook connectivity.
 
+
+
+
+
+
 ### Webhook Event Receiver
 
 For this demo we are buidling a web application with Sinatra. With that framework we build a fundamental HTTP route that receives POST requests made to https://floodsocial.io/webhooks/twitter.
@@ -188,6 +324,27 @@ post '/webhooks/twitter' do
 end
 
 ```
+
+Generating Content
+
+```ruby
+message_data = {}
+message_data['text'] = {}
+
+message_data['quick_reply'] = 
+message_data['quick_reply']['type'] = 'options'
+
+options = {} 
+
+message_data['quick_reply']['options'] = options
+
+
+
+```
+
+
+Generating options
+
 
 
 #### Direct Message Event Manager 
@@ -306,6 +463,35 @@ heroku ps:scale web=0
 heroku ps:scale web=1
 
 
+### Setting up a maintenance mode Welcome Message
+
+```json
+{
+  "welcome_messages": [
+    {
+      "id": "868169781060317187",
+      "created_timestamp": "1495822780276",
+      "message_data": {
+        "text": "System going under maintenance... Come back soon...",
+        "entities": {
+          "hashtags": [
+            
+          ],
+          "symbols": [
+            
+          ],
+          "user_mentions": [
+            
+          ],
+          "urls": [
+            
+          ]
+        }
+      }
+    }
+  ]
+}
+```
 
 
 

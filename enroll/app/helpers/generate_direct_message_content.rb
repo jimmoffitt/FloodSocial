@@ -109,11 +109,7 @@ class GenerateDirectMessageContent
 
 	def generate_system_info(user_id)
 
-		message_text = "The USGS Texas Water Science Center has created two Twitter accounts that Tweet flood information from across Texas. The @USGS_TexasFlood and @USGS_TexasRain accounts are completely autonomous and broadcast data from over 750 rain and river gauges. These gauges Tweet when they have met or exceeded flood thresholds as defined by the National Weather Service (NWS).\n
-                      For more information about this system, click on: https://blog.twitter.com/2016/using-twitter-as-a-go-to-communication-channel-during-severe-weather-events\n\n
-                      This system was developed to enable Twitter users to receive notifications when gauges from selected areas of interest Tweet. Before this system, users had the option to follow these two accounts and turn on Twitter Tweet notifications. This option was not ideal since users would receive notifications about all gauges, including those hundreds of miles away.\n\n
-                      A key detail is that every Tweet posted by these two accounts is geo-tagged, which enables this system to only make notifications when gauges within your area(s) of interest Tweet.\n\n
-                      For sample code, see https://github.com/jimmoffitt/FloodSocial "
+		message_text = "The USGS Texas Water Science Center has created two Twitter accounts that Tweet flood information from across Texas. The @USGS_TexasFlood and @USGS_TexasRain accounts are completely autonomous and broadcast data from over 750 rain and river gauges. These gauges Tweet when they have met or exceeded flood thresholds as defined by the National Weather Service (NWS).\nFor more information about this system, click on: https://blog.twitter.com/2016/using-twitter-as-a-go-to-communication-channel-during-severe-weather-events\n\nThis system was developed to enable Twitter users to receive notifications when gauges from selected areas of interest Tweet. Before this system, users had the option to follow these two accounts and turn on Twitter Tweet notifications. This option was not ideal since users would receive notifications about all gauges, including those hundreds of miles away.\n\nA key detail is that every Tweet posted by these two accounts is geo-tagged, which enables this system to only make notifications when gauges within your area(s) of interest Tweet.\n\nFor sample code, see https://github.com/jimmoffitt/FloodSocial"
 
 		#Build DM content.
 		event = {}

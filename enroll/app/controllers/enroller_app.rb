@@ -17,7 +17,7 @@ class EnrollerApp < Sinatra::Base
 	
 	if File.file?(config_file)
 		keys = YAML::load_file(config_file)
-		puts "keys #{keys}"
+		#puts "keys #{keys}"
 		set :dm_api_consumer_key, keys['dm_api']['consumer_key']
 		set :dm_api_consumer_secret, keys['dm_api']['consumer_secret']
 		set :dm_api_access_token, keys['dm_api']['access_token']
@@ -42,10 +42,11 @@ class EnrollerApp < Sinatra::Base
 	get '/' do
 		"Welcome to the @FloodSocial notification system! <br>
           This websocket component is used for enrolling subscribers into a geo-aware, Twitter-based notification system. <br>
-          This component is a consumer of Account Activity API events.<br><br>
+          This component is a consumer of Account Activity API events, and uses Direct Message API to communicate to recipient account.<br><br>
+
           This demo is currently listening to @USGS_TexasFlood and @USGS_TexasRain for Tweets of interest.<br>
-          However, this system can be tied to any Twitter account that posts geo-tagged Tweets<br><br>
-          A take a tour of the demo by sending a Direct Message to @FloodSocial. <br>
+          However, this system can be tied to any Twitter account that posts geo-tagged Tweets.<br><br>
+          A take a tour of the demo by sending a Direct Message to @FloodSocial. <br> <br>
           Pro Tip: pick an area (with map) outside of Texas and you'll never receive a notification.
     "
 	end

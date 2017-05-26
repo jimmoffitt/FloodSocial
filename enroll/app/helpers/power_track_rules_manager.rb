@@ -11,7 +11,7 @@ class APIBasicRequest
 		#Load configuration.
 
 		if config_file.nil?
-			config = '../../config/config_private.yaml'
+			config = '/Users/jmoffitt/work/floodsocial/enroll/config/config_private.yaml'
 		else
 			config = config_file
 		end
@@ -21,19 +21,17 @@ class APIBasicRequest
 		@keys = {}
 
 		if File.file?(config)
-			puts "Pulling from #{config_file}"
-			keys = YAML::load_file(config)
+			#puts "Pulling gnip keys from #{config_file}"
+			@keys = YAML::load_file(config)
 			@keys = keys['power_track']
 		else
-			puts "Pulling from ENV[]"
+			#puts "Pulling gnip keys from ENV[]"
 			@keys['account_name'] = ENV['GNIP_ACCOUNT_NAME']
 			@keys['user_name'] = ENV['GNIP_USER_NAME']
 			@keys['password'] = ENV['GNIP_PASSWORD']
 			@keys['label'] = ENV['GNIP_LABEL']
 		end
 
-		puts "@keys for power track: #{@key}"
-		
 		@url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{@keys['account_name']}/publishers/twitter/#{@keys['label']}.json"
 		puts "@url=#{@url}"
 
@@ -105,6 +103,7 @@ class APIBasicRequest
 
 		begin
 			response = http.request(request)
+		  put "Rules API GET response: #{response}"
 		rescue
 			sleep 5
 			response = http.request(request) #try again
@@ -143,7 +142,7 @@ class PowerTrackRulesManager
 	end
 
 	def get_rules
-		puts "GETTING Rules..."
+		puts "GETTING Rules from PowerTrack Rules API..."
 		response = @http.GET
 		rules = JSON.parse(response.body)
 		rules['rules']
@@ -212,7 +211,7 @@ class PowerTrackRulesManager
 		value = set_rule_syntax(coordinates[0], coordinates[1], @sources, user_id)
 		#Build tag using user ID and location of interest
 		tag = "#{user_id}|#{location_of_interest} "
-		puts tag
+		#puts tag
 
 		rule_json = set_rules_json(value, tag)
 
@@ -237,7 +236,7 @@ class PowerTrackRulesManager
 
 		rules = get_rules
 
-		puts rules.count
+		#puts rules.count
 
 		rules.each do |rule|
 			if rule['tag'].include?(user_id.to_s)
@@ -253,7 +252,7 @@ class PowerTrackRulesManager
 	def get_area_name_from_tag(rule)
 
 		name = rule['tag'].split('|')[1]
-		puts name
+		#puts name
 
 		name
 	end

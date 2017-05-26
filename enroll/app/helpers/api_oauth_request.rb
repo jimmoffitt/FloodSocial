@@ -12,6 +12,9 @@ class ApiOauthRequest
 	              :uri_path #No default.
 
 	def initialize(config_file = nil)
+		
+		#puts "config: #{config_file}"
+		
 		@base_url = 'https://api.twitter.com/'
 		@uri_path = '' #'/1.1/direct_messages' or '/1.1/account_activity'
 
@@ -21,24 +24,24 @@ class ApiOauthRequest
 			config = config_file
 		end
 		
+		puts config
+		
 		#Get Twitter App keys and tokens. Read from 'config.yaml' if provided, or if running on Heroku, pull from the 
-		#'Config Variables' via the ENV{} hash/
+		#'Config Variables' via the ENV{} hash.
 		@keys = {}
 
 		if File.file?(config)
-			puts "Pulling from #{config_file}"
-			keys = YAML::load_file(config)
+			#puts "Pulling keys from #{config}"
+			@keys = YAML::load_file(config)
 			@keys = keys['dm_api']
 		else
-			puts "Pulling from ENV[]"
+			#puts "Pulling keys from ENV[]"
 			@keys['consumer_key'] = ENV['CONSUMER_KEY']
 			@keys['consumer_secret'] = ENV['CONSUMER_SECRET']
 			@keys['access_token'] = ENV['ACCESS_TOKEN']
 			@keys['access_token_secret'] = ENV['ACCESS_TOKEN_SECRET']
 		end
 
-		puts "@keys for OAuth: #{@key}"
-		
 	end
 
 	def get_api_access

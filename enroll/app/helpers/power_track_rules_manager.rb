@@ -265,10 +265,14 @@ class PowerTrackRulesManager
 		
 		if !rules.nil?
 			rules.each do |rule|
-				if rule['tag'].include?(user_id.to_s)
-					#puts "HAVE MATCH"
-					area_names << get_area_name_from_tag(rule)
-				end
+				begin
+					if rule['tag'].include?(user_id.to_s)
+						#puts "HAVE MATCH"
+						area_names << get_area_name_from_tag(rule)
+					end
+				rescue
+					puts "Add tag to special demo rule?"
+				end	
 			end
 		end
 

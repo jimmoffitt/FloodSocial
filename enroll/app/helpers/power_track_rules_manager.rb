@@ -11,7 +11,7 @@ class APIBasicRequest
 		#Load configuration.
 
 		if config_file.nil?
-			config = '/Users/jmoffitt/work/floodsocial/enroll/config/config_private.yaml'
+			config = '[PROJECT_HOME]/enroll/config/config_private.yaml'
 		else
 			config = config_file
 		end
@@ -35,6 +35,10 @@ class APIBasicRequest
 		@url = "https://gnip-api.twitter.com/rules/powertrack/accounts/#{@keys['account_name']}/publishers/twitter/#{@keys['label']}.json"
 		puts "@url=#{@url}"
 
+		#Load Twitter account sources
+		@keys['sources'] = ENV['TWEET_ALERT_SOURCES']
+		puts "System listening to #{@keys['sources']}"
+		
 	end
 
 	def POST_with_delete(data=nil)
@@ -119,7 +123,7 @@ class PowerTrackRulesManager
 	require 'json'
 	require 'csv'
 
-	attr_accessor :source,
+	attr_accessor :sources,
 	              :locations,
 	              :radius
 
@@ -131,7 +135,7 @@ class PowerTrackRulesManager
 		#TODO - add feature to make point raduis distance customizable?
 		@radius = 25
 		#TODO - set @sources based on config.yaml specification.
-		@sources = %w[USGS_TexasFlood USGS_TexasRain]
+		@sources = %w[USGS_TexasFlood USGS_TexasRain FloodSocial]
 
 		begin
 			@locations = CSV.read(File.join(APP_ROOT, 'data', 'placesOfInterest.csv'))
@@ -283,25 +287,23 @@ class PowerTrackRulesManager
 end
 
 if __FILE__ == $0 #This script code is executed when running this file.
-
+#testing and sample calls
+	
 	manager = PowerTrackRulesManager.new
-
+	manager.sources = "USGS_TexasFlood USGS_TexasRain FloodSocial"
+	
 	sources = []
-	sources << 'USGS_TexasFlood'
-	sources << 'USGS_TexasRain'
 	sources << 'snowman'
 	long = -87.0000
 	lat = 45.0000
-	user_id = 17200032
 
 	#manager.add_subscription_for_list_selection(user_id,'Austin')
 	#manager.add_subscription_for_coordinates(user_id,long, lat)
 
 	#puts manager.get_rules
 
-	user_id = "944480690"
-
-	manager.delete_subscription(user_id)
+	#user_id = "944480690"
+  #manager.delete_subscription(user_id)
 
 
 end

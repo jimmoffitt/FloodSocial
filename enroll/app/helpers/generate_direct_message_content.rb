@@ -326,7 +326,7 @@ class GenerateDirectMessageContent
 
 		option = {}
 		option['label'] = 'Add area of interest'
-		option['description'] = 'Enroll by selecting an area'
+		option['description'] = 'Enroll by selecting an area of interest'
 		option['metadata'] = 'add_area'
 		options << option
 

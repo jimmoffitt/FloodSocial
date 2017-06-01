@@ -55,6 +55,8 @@ class EventManager
 							@DMSender.send_system_info(user_id)
 						elsif response == 'return_to_system'
 							@DMSender.send_welcome_message(user_id)
+						elsif response == 'add_area'
+							@DMSender.send_area_method(user_id)
 						elsif response == 'select_on_map'
 							@DMSender.send_map(user_id)
 						elsif response == 'pick_from_list'
@@ -102,7 +104,7 @@ class EventManager
 						request = dm_event['message_create']['message_data']['text']
 						user_id = dm_event['message_create']['sender_id']
 
-						if request.length < COMMAND_MESSAGE_LIMIT and (request.downcase.include? 'add' or request.downcase.include? 'main' or request.downcase.include? 'hello')
+						if request.length < COMMAND_MESSAGE_LIMIT and (request.downcase.include? 'home' or request.downcase.include? 'add' or request.downcase.include? 'main' or request.downcase.include? 'hello')
 							puts 'Send QR to add an area'
 							#Send QR for which 'select area' method
 							@DMSender.send_welcome_message(user_id)

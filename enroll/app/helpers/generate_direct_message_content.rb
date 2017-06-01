@@ -2,13 +2,13 @@ class GenerateDirectMessageContent
 
 	def generate_greeting
 
-		greeting = "Welcome to a Twitter-based notification system. This system is developed to work with any account that posts geo-tagged Tweets, and is currently using the @USGS_TexasFlood and @USGS_TexasRain Twitter accounts as the 'source' data.\n\nYou can enroll in the system by adding an area of interest. After enrolling will receive a Direct Message notification whenever a source Twitter account posts a Tweet from that area. "
+		greeting = "Welcome to a Twitter-based, geo-aware notification system. This system is developed to work with any account that posts geo-tagged Tweets, and is currently using the @USGS_TexasFlood and @USGS_TexasRain Twitter accounts as the 'source' data.\n\nYou can enroll in the system by adding an area of interest. After enrolling will receive a Direct Message notification whenever a source Twitter account posts a Tweet from that area. "
 		greeting
 
 	end
 	
 	def generate_main_message
-		greeting = "Welcome to a Twitter-based notification system. "
+		greeting = "Welcome to a Twitter-based, geo-aware notification system. "
 		greeting
 
 	end
@@ -19,17 +19,25 @@ class GenerateDirectMessageContent
 		quick_reply['options'] = []
 
 		option = {}
-		option['label'] = 'Pick area of interest from list'
-		option['description'] = 'Enroll by selecting a single area of interest from list'
+		option['label'] = 'Add area of interest'
+		option['description'] = 'Enroll by selecting area of interest'
+		option['metadata'] = 'add_area'
+		quick_reply['options'] << option
+		
+=begin
+		option = {}
+		option['label'] = 'Add area of interest from list'
+		option['description'] = 'Enroll by selecting an area of interest from list'
 		option['metadata'] = 'pick_from_list'
 		quick_reply['options'] << option
 
 		option = {}
-		option['label'] = 'Pick area of interest from map'
+		option['label'] = 'Add area of interest from map'
 		option['description'] = 'Enroll by selecting location of interest using a map'
 		option['metadata'] = 'select_on_map'
 		quick_reply['options'] << option
-
+=end	
+		
 		option = {}
 		option['label'] = 'List current area(s) of interest'
 		option['description'] = 'Show current areas of interest'
@@ -129,7 +137,7 @@ class GenerateDirectMessageContent
 		#Not including 'description' option attributes.
 
 		option = {}
-		option['label'] = 'Go Back'
+		option['label'] = 'Home'
 		option['metadata'] = "return_to_system"
 		options << option
 
@@ -148,7 +156,7 @@ class GenerateDirectMessageContent
 											\n 'About' -- Learn more about the system and follow links to more information.
 											\n 'Help' -- See this help screen.
 											\n 'Quit' or 'Stop or 'Unsubscribe' -- Unsubscribe from system, removing all areas of interest.
-                      \n 'Hello' or 'Main' or 'Agent' -- Trigger option menu. 
+                      \n 'Home', 'Hello', or 'Main' -- Trigger option menu.
                      "
 
 		#Build DM content.
@@ -169,7 +177,7 @@ class GenerateDirectMessageContent
 		#Not including 'description' option attributes.
 
 		option = {}
-		option['label'] = 'Go Back'
+		option['label'] = 'Home'
 		option['metadata'] = "return_to_system"
 		options << option
 
@@ -180,7 +188,6 @@ class GenerateDirectMessageContent
 	end
 	
 	#Generates Quick Reply for picking method for selecting area of interst: map or list
-	#TODO - next UI phrase?
 	def generate_location_method
 
 		message_text = "Select method for (privately) sharing location:"
@@ -203,19 +210,19 @@ class GenerateDirectMessageContent
 		#Not including 'description' option attributes.
 
 		option = {}
-		option['label'] = 'Pick area of interest from list'
-		option['description'] = 'Enroll by selecting a single area of interest from list'
+		option['label'] = 'Add area of interest from list'
+		option['description'] = 'Enroll by selecting an area of interest from list'
 		option['metadata'] = 'pick_from_list'
 		quick_reply['options'] << option
 
 		option = {}
-		option['label'] = 'Pick area of interest from map'
-		option['description'] = 'Enroll by selecting location of interest using a map'
+		option['label'] = 'Add area of interest from map'
+		option['description'] = 'Enroll by selecting an interest using a map'
 		option['metadata'] = 'select_on_map'
 		quick_reply['options'] << option
 
 		option = {}
-		option['label'] = 'Go Back'
+		option['label'] = 'Home'
 		option['metadata'] = "return_to_system"
 		options << option
 
@@ -348,7 +355,7 @@ class GenerateDirectMessageContent
 		options << option
 
 		#option = {}
-		#option['label'] = 'Go Back'
+		#option['label'] = 'Home'
 		#option['metadata'] = "return_to_system"
 		#options << option
 
@@ -418,7 +425,7 @@ class GenerateDirectMessageContent
 		options << option
 
 		#option = {}
-		#option['label'] = 'Go Back'
+		#option['label'] = 'Home'
 		#option['metadata'] = "return_to_system"
 		#options << option
 

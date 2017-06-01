@@ -55,50 +55,47 @@ class SendDirectMessage
 	end
 
 	def send_welcome_message(user_id)
-		puts "(Re)send welcome message"
 		dm_content = @content.generate_welcome_message(user_id)
 		#puts "Sending #{dm_content} to #{user_id} "
 		send_direct_message(dm_content)
 	end
 
+	def send_area_method(user_id)
+		dm_content = @content.generate_location_method(user_id)
+		send_direct_message(dm_content)
+	end
+
 	def send_map(user_id)
-		puts "Sending user map DM!"
 		dm_content = @content.generate_location_map(user_id)
 		send_direct_message(dm_content)
 	end
 
 	def send_location_list(user_id)
-		puts "Sending user location list DM!"
 		dm_content = @content.generate_location_list(user_id, @location_list)
 		send_direct_message(dm_content)
 	end
 
 	def send_subscription_list(user_id, subscriptions)
-		puts "Have filtered list with #{subscriptions.count} subs. Sending current areas of interest!"
 		dm_content = @content.generate_subscription_list(user_id, subscriptions)
 		send_direct_message(dm_content)
 	end
 
 	def send_system_info(user_id)
-		puts "Sending system info."
 		dm_content = @content.generate_system_info(user_id)
 		send_direct_message(dm_content)
 	end
 	
 	def send_system_help(user_id)
-		puts "Sending system help message"
 		dm_content = @content.generate_system_help(user_id)
 		send_direct_message(dm_content)
 	end
 
 	def send_confirmation(user_id, area_of_interest)
-		puts "Sending user subscribe confirmation."
 		dm_content = @content.generate_confirmation(user_id, area_of_interest)
 		send_direct_message(dm_content)
 	end
 
 	def send_unsubscribe(user_id)
-		puts "Sending user unsubscribe confirmation"
 		dm_content = @content.generate_unsubscribe(user_id)
 		send_direct_message(dm_content)
 	end

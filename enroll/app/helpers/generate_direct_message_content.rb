@@ -209,19 +209,19 @@ class GenerateDirectMessageContent
 
 		option = {}
 		option['label'] = 'Add area of interest from list'
-		option['description'] = 'Enroll by selecting an area of interest from list'
+		#option['description'] = 'Enroll by selecting an area of interest from list'
 		option['metadata'] = 'pick_from_list'
 		options << option
 
 		option = {}
 		option['label'] = 'Add area of interest from map'
-		option['description'] = 'Enroll by selecting an interest using a map'
+		#option['description'] = 'Enroll by selecting an interest using a map'
 		option['metadata'] = 'select_on_map'
 		options << option
 
 		option = {}
 		option['label'] = 'Home'
-		option['description'] = 'Back to main menu'
+		#option['description'] = 'Back to main menu'
 		option['metadata'] = "return_to_system"
 		options << option
 

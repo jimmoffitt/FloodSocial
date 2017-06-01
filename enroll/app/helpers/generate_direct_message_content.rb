@@ -134,8 +134,7 @@ class GenerateDirectMessageContent
 		message_data['quick_reply']['type'] = 'options'
 
 		options = []
-		#Not including 'description' option attributes.
-
+		
 		option = {}
 		option['label'] = 'Home'
 		option['metadata'] = "return_to_system"
@@ -187,7 +186,7 @@ class GenerateDirectMessageContent
 		event.to_json
 	end
 	
-	#Generates Quick Reply for picking method for selecting area of interst: map or list
+	#Generates Quick Reply for picking method for selecting area of inteerst: map or list
 	def generate_location_method(recipient_id)
 
 		message_text = "Select method for (privately) sharing location:"
@@ -222,6 +221,7 @@ class GenerateDirectMessageContent
 
 		option = {}
 		option['label'] = 'Home'
+		option['description'] = 'Back to main menu'
 		option['metadata'] = "return_to_system"
 		options << option
 

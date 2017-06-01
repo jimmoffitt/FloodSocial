@@ -115,7 +115,7 @@ class GenerateDirectMessageContent
 
 	end
 
-	def generate_system_info(user_id)
+	def generate_system_info(recipient_id)
 
 		message_text = "The USGS Texas Water Science Center has created two Twitter accounts that Tweet flood information from across Texas. The @USGS_TexasFlood and @USGS_TexasRain accounts are completely autonomous and broadcast data from over 750 rain and river gauges. These gauges Tweet when they have met or exceeded flood thresholds as defined by the National Weather Service (NWS).\nFor more information about this system, click on: https://blog.twitter.com/2016/using-twitter-as-a-go-to-communication-channel-during-severe-weather-events\n\nThis system was developed to enable Twitter users to receive notifications when gauges from selected areas of interest Tweet. Before this system, users had the option to follow these two accounts and turn on Twitter Tweet notifications. This option was not ideal since users would receive notifications about all gauges, including those hundreds of miles away.\n\nA key detail is that every Tweet posted by these two accounts is geo-tagged, which enables this system to only make notifications when gauges within your area(s) of interest Tweet.\n\nFor sample code, see https://github.com/jimmoffitt/FloodSocial"
 
@@ -125,7 +125,7 @@ class GenerateDirectMessageContent
 		event['event']['type'] = 'message_create'
 		event['event']['message_create'] = {}
 		event['event']['message_create']['target'] = {}
-		event['event']['message_create']['target']['recipient_id'] = "#{user_id}"
+		event['event']['message_create']['target']['recipient_id'] = "#{recipient_id}"
 
 		message_data = {}
 		message_data['text'] = message_text
@@ -147,7 +147,7 @@ class GenerateDirectMessageContent
 		event.to_json
 	end
 
-	def generate_system_help(user_id)
+	def generate_system_help(recipient_id)
 
 		message_text = "This system supports several commands. Commands are made by sending a Direct Message including these
                     (case-insensitive) keywords:
@@ -165,7 +165,7 @@ class GenerateDirectMessageContent
 		event['event']['type'] = 'message_create'
 		event['event']['message_create'] = {}
 		event['event']['message_create']['target'] = {}
-		event['event']['message_create']['target']['recipient_id'] = "#{user_id}"
+		event['event']['message_create']['target']['recipient_id'] = "#{recipient_id}"
 
 		message_data = {}
 		message_data['text'] = message_text
@@ -188,7 +188,7 @@ class GenerateDirectMessageContent
 	end
 	
 	#Generates Quick Reply for picking method for selecting area of interst: map or list
-	def generate_location_method(user_id)
+	def generate_location_method(recipient_id)
 
 		message_text = "Select method for (privately) sharing location:"
 
@@ -198,7 +198,7 @@ class GenerateDirectMessageContent
 		event['event']['type'] = 'message_create'
 		event['event']['message_create'] = {}
 		event['event']['message_create']['target'] = {}
-		event['event']['message_create']['target']['recipient_id'] = "#{user_id}"
+		event['event']['message_create']['target']['recipient_id'] = "#{recipient_id}"
 
 		message_data = {}
 		message_data['text'] = message_text
@@ -291,13 +291,13 @@ class GenerateDirectMessageContent
 
 	end
 
-	def generate_subscription_list(user_id, subscriptions)
+	def generate_subscription_list(recipient_id, subscriptions)
 		event = {}
 		event['event'] = {}
 		event['event']['type'] = 'message_create'
 		event['event']['message_create'] = {}
 		event['event']['message_create']['target'] = {}
-		event['event']['message_create']['target']['recipient_id'] = "#{user_id}"
+		event['event']['message_create']['target']['recipient_id'] = "#{recipient_id}"
 
 		message_data = {}
 
@@ -367,14 +367,14 @@ class GenerateDirectMessageContent
 
 	end
 
-	def generate_confirmation(user_id, area_of_interest)
+	def generate_confirmation(recipient_id, area_of_interest)
 		#Build DM content.
 		event = {}
 		event['event'] = {}
 		event['event']['type'] = 'message_create'
 		event['event']['message_create'] = {}
 		event['event']['message_create']['target'] = {}
-		event['event']['message_create']['target']['recipient_id'] = "#{user_id}"
+		event['event']['message_create']['target']['recipient_id'] = "#{recipient_id}"
 
 		message_data = {}
 		message_data['text'] = "You have added an area of interest: #{area_of_interest}"
@@ -439,14 +439,14 @@ class GenerateDirectMessageContent
 
 	end
 
-	def generate_unsubscribe(user_id)
+	def generate_unsubscribe(recipient_id)
 
 		event = {}
 		event['event'] = {}
 		event['event']['type'] = 'message_create'
 		event['event']['message_create'] = {}
 		event['event']['message_create']['target'] = {}
-		event['event']['message_create']['target']['recipient_id'] = "#{user_id}"
+		event['event']['message_create']['target']['recipient_id'] = "#{recipient_id}"
 
 		message_data = {}
 		message_data['text'] = "You have been unsubscribed.\n\n To re-subscribe either send an 'Add' Direct Message or delete this conversation and send a new Direct Message to see the Welcome Message.

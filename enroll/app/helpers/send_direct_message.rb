@@ -54,49 +54,49 @@ class SendDirectMessage
 
 	end
 
-	def send_welcome_message(user_id)
-		dm_content = @content.generate_welcome_message(user_id)
-		#puts "Sending #{dm_content} to #{user_id} "
+	def send_welcome_message(recipient_id)
+		dm_content = @content.generate_welcome_message(recipient_id)
+		#puts "Sending #{dm_content} to #{recipient_id} "
 		send_direct_message(dm_content)
 	end
 
-	def send_area_method(user_id)
-		dm_content = @content.generate_location_method(user_id)
+	def send_area_method(recipient_id)
+		dm_content = @content.generate_location_method(recipient_id)
 		send_direct_message(dm_content)
 	end
 
-	def send_map(user_id)
-		dm_content = @content.generate_location_map(user_id)
+	def send_map(recipient_id)
+		dm_content = @content.generate_location_map(recipient_id)
 		send_direct_message(dm_content)
 	end
 
-	def send_location_list(user_id)
-		dm_content = @content.generate_location_list(user_id, @location_list)
+	def send_location_list(recipient_id)
+		dm_content = @content.generate_location_list(recipient_id, @location_list)
 		send_direct_message(dm_content)
 	end
 
-	def send_subscription_list(user_id, subscriptions)
-		dm_content = @content.generate_subscription_list(user_id, subscriptions)
+	def send_subscription_list(recipient_id, subscriptions)
+		dm_content = @content.generate_subscription_list(recipient_id, subscriptions)
 		send_direct_message(dm_content)
 	end
 
-	def send_system_info(user_id)
-		dm_content = @content.generate_system_info(user_id)
+	def send_system_info(recipient_id)
+		dm_content = @content.generate_system_info(recipient_id)
 		send_direct_message(dm_content)
 	end
 	
-	def send_system_help(user_id)
-		dm_content = @content.generate_system_help(user_id)
+	def send_system_help(recipient_id)
+		dm_content = @content.generate_system_help(recipient_id)
 		send_direct_message(dm_content)
 	end
 
-	def send_confirmation(user_id, area_of_interest)
-		dm_content = @content.generate_confirmation(user_id, area_of_interest)
+	def send_confirmation(recipient_id, area_of_interest)
+		dm_content = @content.generate_confirmation(recipient_id, area_of_interest)
 		send_direct_message(dm_content)
 	end
 
-	def send_unsubscribe(user_id)
-		dm_content = @content.generate_unsubscribe(user_id)
+	def send_unsubscribe(recipient_id)
+		dm_content = @content.generate_unsubscribe(recipient_id)
 		send_direct_message(dm_content)
 	end
 

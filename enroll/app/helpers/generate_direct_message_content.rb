@@ -207,7 +207,6 @@ class GenerateDirectMessageContent
 		message_data['quick_reply']['type'] = 'options'
 
 		options = []
-		#Not including 'description' option attributes.
 
 		option = {}
 		option['label'] = 'Add area of interest from list'

@@ -188,7 +188,7 @@ class GenerateDirectMessageContent
 	end
 	
 	#Generates Quick Reply for picking method for selecting area of interst: map or list
-	def generate_location_method
+	def generate_location_method(user_id)
 
 		message_text = "Select method for (privately) sharing location:"
 
@@ -325,16 +325,16 @@ class GenerateDirectMessageContent
 		#Not including 'description' option attributes.
 
 		option = {}
-		option['label'] = 'Pick area of interest from list'
-		option['description'] = 'Enroll by selecting a single area of interest from list'
-		option['metadata'] = 'pick_from_list'
+		option['label'] = 'Add area of interest'
+		option['description'] = 'Enroll by selecting an area'
+		option['metadata'] = 'add_area'
 		options << option
 
-		option = {}
-		option['label'] = 'Pick area of interest from map'
-		option['description'] = 'Enroll by selecting location of interest using a map'
-		option['metadata'] = 'select_on_map'
-		options << option
+		#option = {}
+		#option['label'] = 'Pick area of interest from map'
+		#option['description'] = 'Enroll by selecting location of interest using a map'
+		#option['metadata'] = 'select_on_map'
+		#options << option
 
 		option = {}
 		option['label'] = 'Learn more about this system'
@@ -389,16 +389,16 @@ class GenerateDirectMessageContent
 		#Not including 'description' option attributes.
 
 		option = {}
-		option['label'] = 'Pick area of interest from list'
-		option['description'] = 'Enroll by selecting a single area of interest from list'
-		option['metadata'] = 'pick_from_list'
+		option['label'] = 'Add area of interest'
+		option['description'] = 'Enroll by selecting an area of interest'
+		option['metadata'] = 'add_area'
 		options << option
 
-		option = {}
-		option['label'] = 'Pick area of interest from map'
-		option['description'] = 'Enroll by selecting location of interest using a map'
-		option['metadata'] = 'select_on_map'
-		options << option
+		#option = {}
+		#option['label'] = 'Pick area of interest from map'
+		#option['description'] = 'Enroll by selecting location of interest using a map'
+		#option['metadata'] = 'select_on_map'
+		#options << option
 
 		option = {}
 		option['label'] = 'List current area(s) of interest'

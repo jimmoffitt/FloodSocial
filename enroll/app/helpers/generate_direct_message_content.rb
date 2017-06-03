@@ -24,20 +24,6 @@ class GenerateDirectMessageContent
 		option['metadata'] = 'add_area'
 		quick_reply['options'] << option
 		
-=begin
-		option = {}
-		option['label'] = 'Add area of interest from list'
-		option['description'] = 'Enroll by selecting an area of interest from list'
-		option['metadata'] = 'pick_from_list'
-		quick_reply['options'] << option
-
-		option = {}
-		option['label'] = 'Add area of interest from map'
-		option['description'] = 'Enroll by selecting location of interest using a map'
-		option['metadata'] = 'select_on_map'
-		quick_reply['options'] << option
-=end	
-		
 		option = {}
 		option['label'] = 'List current area(s) of interest'
 		option['description'] = 'Show current areas of interest'
@@ -117,7 +103,7 @@ class GenerateDirectMessageContent
 
 	def generate_system_info(recipient_id)
 
-		message_text = "The USGS Texas Water Science Center has created two Twitter accounts that Tweet flood information from across Texas. The @USGS_TexasFlood and @USGS_TexasRain accounts are completely autonomous and broadcast data from over 750 rain and river gauges. These gauges Tweet when they have met or exceeded flood thresholds as defined by the National Weather Service (NWS).\nFor more information about this system, click on: https://blog.twitter.com/2016/using-twitter-as-a-go-to-communication-channel-during-severe-weather-events\n\nThis system was developed to enable Twitter users to receive notifications when gauges from selected areas of interest Tweet. Before this system, users had the option to follow these two accounts and turn on Twitter Tweet notifications. This option was not ideal since users would receive notifications about all gauges, including those hundreds of miles away.\n\nA key detail is that every Tweet posted by these two accounts is geo-tagged, which enables this system to only make notifications when gauges within your area(s) of interest Tweet.\n\nFor sample code, see https://github.com/jimmoffitt/FloodSocial"
+		message_text = "The USGS Texas Water Science Center has created two Twitter accounts that Tweet flood information from across Texas. The @USGS_TexasFlood and @USGS_TexasRain accounts are completely autonomous and broadcast data from over 750 rain and river gauges. These gauges Tweet when they have met or exceeded flood thresholds as defined by the National Weather Service (NWS).\nFor more information about this system, click on: https://blog.twitter.com/2016/using-twitter-as-a-go-to-communication-channel-during-severe-weather-events\n\nThis system was developed to enable Twitter users to receive notifications when gauges from selected areas of interest Tweet. Before this system, users had the option to follow these two accounts and turn on Twitter Tweet notifications. This option was not ideal since users would receive notifications about all gauges, including those hundreds of miles away.\n\u2744\nA key detail is that every Tweet posted by these two accounts is geo-tagged, which enables this system to only make notifications when gauges within your area(s) of interest Tweet.\n\u2744\nFor sample code, see https://github.com/jimmoffitt/FloodSocial"
 
 		#Build DM content.
 		event = {}
@@ -303,7 +289,7 @@ class GenerateDirectMessageContent
 			list_message = "You are subscribed to the following areas of interest:"
 
 			subscriptions.each do |area|
-				list_message = list_message + "\n * #{area}"
+				list_message = list_message + "\n\u2744 #{area}"
 			end
 
 		end

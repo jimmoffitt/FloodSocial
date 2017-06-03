@@ -95,6 +95,11 @@ class SendDirectMessage
 		send_direct_message(dm_content)
 	end
 
+	def send_status(recipient_id, message)
+		dm_content = @content.generate_message(recipient_id, message)
+		send_direct_message(dm_content)
+	end
+
 	def send_unsubscribe(recipient_id)
 		dm_content = @content.generate_unsubscribe(recipient_id)
 		send_direct_message(dm_content)

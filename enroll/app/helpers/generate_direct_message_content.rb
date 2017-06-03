@@ -437,7 +437,6 @@ class GenerateDirectMessageContent
 
 			event['event']['message_create']['message_data'] = message_data
 			event.to_json
-		end		
 	end
 
 	def generate_unsubscribe(recipient_id)

@@ -165,6 +165,9 @@ class GenerateDirectMessageContent
 		event.to_json
 	end
 	
+	
+	
+	
 	#Generates Quick Reply for picking method for selecting area of inteerst: map or list
 	def generate_location_method(recipient_id)
 
@@ -415,6 +418,26 @@ class GenerateDirectMessageContent
 
 		event.to_json
 
+	end
+	
+	def generate_message(recipient_id, message)
+
+			message_text = message
+
+			#Build DM content.
+			event = {}
+			event['event'] = {}
+			event['event']['type'] = 'message_create'
+			event['event']['message_create'] = {}
+			event['event']['message_create']['target'] = {}
+			event['event']['message_create']['target']['recipient_id'] = "#{recipient_id}"
+
+			message_data = {}
+			message_data['text'] = message_text
+
+			event['event']['message_create']['message_data'] = message_data
+			event.to_json
+		end		
 	end
 
 	def generate_unsubscribe(recipient_id)

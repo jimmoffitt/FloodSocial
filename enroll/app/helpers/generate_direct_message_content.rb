@@ -149,7 +149,7 @@ class GenerateDirectMessageContent
 	def generate_system_help(recipient_id)
 
 		message_text = "This system supports several commands. Commands are made by sending a Direct Message including these (case-insensitive) keywords:
-                      \n 'Home', 'Hello', or 'Main' -- go back to main menu.\n 'Add' -- Add another area of interest. \n 'List' -- Review what areas of interest you are subscribed to. \n 'About' -- Learn more about the system and follow links to more information. \n 'Help' -- See this help screen. \n 'Quit' or 'Stop or 'Unsubscribe' -- Unsubscribe from system, removing all areas of interest."
+                      \n\u2744 'Home', 'Hello', or 'Main' -- go back to main menu.\n\u2744 'Add' -- Add another area of interest. \n\u2744 'List' -- Review what areas of interest you are subscribed to. \n\u2744 'About' -- Learn more about the system and follow links to more information. \n\u2744 'Help' -- See this help screen. \n\u2744 'Quit' or 'Stop or 'Unsubscribe' -- Unsubscribe from system, removing all areas of interest."
 
 		#Build DM content.
 		event = {}

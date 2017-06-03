@@ -15,13 +15,15 @@ In this tutorial we are going to build a geo-enabled notification system based o
 
 The fundamental user-story is: _"As a Twitter user I want to receive a Direct Message when a Twitter account I follow posts a Tweet of interest geo-tagged in an area of interest."_ 
 
-Notifications will come in the form of Twitter Direct Messages, the Twitter account of interest will post Tweets associated with an exact location, and areas of interest will be defined as a 25-mile circle centered on a location shared by the Twitter user. Users will be given two methods to *privately share* their location: select a point on a map, or chose from a list of locations. For this tutorial the location lists will consist of city names, and the corresponding areas will be based on the geographic center of those cities.
+Notifications will come in the form of Twitter Direct Messages, the Twitter 'source' account(s) will post Tweets associated with an exact location, and areas of interest will be defined as a 25-mile circle centered on a location shared by the Twitter user. Users will be given two methods to *privately share* their location: select a point on a map, or chose from a list of locations. For this tutorial the location lists will consist of city names, and the corresponding areas will be based on the geographic center of those cities. 
 
-The fundamental goal of this tutorial is to demonstrate how to enable Twitter users to share their location of interest via a private Direct Message. The component we are building here is based on the Twitter Direct Message (DM) and Account Activity (AA) APIs. This component will be referred as an *Enroller*, a webhook-based component that enables Twitter users to subscribe to the system. This *Enroller* is one of three components that make up the complete notification system:
+The fundamental goal of this tutorial is to demonstrate how to enable Twitter users to share their location of interest via a private Direct Message. The component we are building here is based on the Twitter Direct Message (DM) and Account Activity (AA) APIs. This component will be referred as an *Enroller*, a webhook-based component that enables Twitter users to subscribe to the system. This *Enroller* is one of two components that make up the complete notification system:
 
-  + Enroller - Webhook consumer that manages Direct Message events, both receiving messages from Twitter and also sending messages. Creates and manages subscriber-specific PowerTrack filters, which are applied to a real-time Twitter stream. 
-  + Alarm listener: monitors real-time stream for Tweets of (geo) interest, triggers notification when there is a location-of-interest match.
-  + Notifier: send Direct Message notifications to subscribers. 
+  + Enroller - A webhook consumer that manages Direct Message events that are delivered via the Twitter Account Activity API. This new API currently supports Direct Messages, but will soon also support Tweet and select Engagement events. Since the Accounty Activity API is webhook-based it opens the door to a lot of new Twitter 'system' design and use-cases. For this demo, the Enroller will both receive event messages from Twitter and also sending messages to enrollees. The Enroller creates and manages subscriber-specific details (in this case PowerTrack filters), which affect which Tweets are consumed from the Twitter real-time Firehose. The Enroller is a Ruby Sinatra-based web application hosted on Heroku. 
+  
+  + Tweet Alert - For this prototype, this is a simple Python script that manages both of these concerns: 
+  	+ Alarm listener: monitors real-time stream for Tweets of (geo) interest, triggers notification when there is a location-of-interest match.
+  	+ Notifier: send Direct Message notifications to subscribers. 
   
 See [HERE](https://github.com/jimmoffitt/FloodSocial) if you are interested in the other two components.
   

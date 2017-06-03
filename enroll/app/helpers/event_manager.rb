@@ -86,15 +86,12 @@ class EventManager
 
 							@DMSender.send_confirmation(user_id, location_choice)
 						elsif response == 'list'
-							puts "Retrieve current config for user #{user_id}. "
-							subscriptions = @RulesManager.get_subscriptions(user_id)
-							#puts "Subscriptions: #{subscriptions}"
 							@DMSender.send_status(user_id,'Looking up areas of interest...')
+							subscriptions = @RulesManager.get_subscriptions(user_id)
 							@DMSender.send_subscription_list(user_id, subscriptions)
 						elsif response == 'unsubscribe'
-							puts 'unsubscribe'
-							@RulesManager.delete_subscription(user_id)
 							@DMSender.send_status(user_id,'Deleting areas of interest...')
+							@RulesManager.delete_subscription(user_id)
 							@DMSender.send_unsubscribe(user_id)
 						else #we have an answer to one of the above.
 							puts "UNHANDLED user response: #{response}"

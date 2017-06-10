@@ -115,6 +115,8 @@ After you have navigated past the Welcome Message you can send 'command' Direct 
   + Direct Message Sender
   + Rule manager: takes user submissions and converts those to PowerTrack rules and adds to stream.
 
+
+
 ### Scripts for configuration webhooks
 
 
@@ -500,78 +502,6 @@ heroku ps:scale web=1
 
 
 
-
-================================================
-Demo Notes:
-
-+ Webhook consumer - Subscription Manager, private user data
-+ Real-time PowerTrack with Rules API
-  + Real-time PT stream consumer   
-  + PowerTrack Rules Manager
-+ DM Notifier
-  
-
-
-  
- + Develop Webhook (event) consumer.
-  + Implement GET method to support CRC.
-  + Implement POST method to receive webhook events from Twitter.
-  + Build webhook event processor, forking conversations and building Direct Message content (welcome messages and quick replies).
-  
-  Fundamental pieces:
-    + Configuration tools.
-    + Event Manager - listening for responses and commands.
-    + DM Sender - Asking questions and answering questions. 
-    
-
-[] Deploy Webhook consusumer.
-    [] Developing with localhost
-        [] ngrok and pagekite experiments.
-           ./ngrok http -subdomain=customdomain 9393
-    [] Deploying to cloud host
-        [] heroku notes:
-    [] Consumer data transfers to other components? Data stores?
-        [] Maintain simple text file?
-        [] Write to database?
-        [X] Sneakers and thumbdrives? 
-
-[] Other concerns outside of the webhook component:
-  [] Rule manager: takes user submissions and converts those to PowerTrack rules and adds to stream.
-  [] Alarm listener: monitors real-time stream for Tweets of (geo) interest,
-  [] Notifier: send DM Notifications to subscribers. 
-
-
-## Having users share their location.
-
-In order to prototype a geo-aware notification system, knowing subscriber locations of interest is key metadata. 
-
-This system is being deployed on the Twitter platform, which is a unique social media network since it has an emphasis on public communications. At the same time, Twitter offers private communcation with Direct Messages. These private messages enable subscribers to privately share their areas of interest. A key phrase here is "of interest." This notification system does not know the user's *current* and *precise* location, but rather it knows a more general area of interest. These areas of interest are (currently) circles with a 25-mile radius. 
-
-The prototye gives users two options for sharing their location of intertest:
-
-+ Pick from a list of locations. For this prototype is a list of Texas cities.
-+ Select location on a map. This map defaults to your device's current location, and is scrollable so you can select any location.
-
-When a user pick from the list, 
-
-answer = user_dm['direct_message_events']['message_create']['message_data']['quick_reply_response']
-if answer == 'list'
-if answer == 'map'
-if answer == 'unsubscribe'
-
-user_id = user_dm['direct_message_events']['message_create']['sender_id']
-
-
-user_dm['direct_message_events']['message_create']['message_data']['entities']['urls']['expanded_url']
--->  "https://twitter.com/i/location?lat=32.71790004525148&long=-97.32473787097997"
-
-
-user_dm['direct_message_events']['message_create']['message_data']['attachment']['location']['shared_coordinates']['coordinates']['coordinates'] --> array --> 
-['coordinates'][0] --> -97.032########  
-['coordinates'][1] --> 32.7179000##### 
-
-
-## From subscriptions to real-time PowerTrack 
 
 
 

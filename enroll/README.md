@@ -95,7 +95,7 @@ From a developer's prespective, other desirable features included:
 
 To check out the demo simply send a Direct Message to @FloodSocial. When you do that you will see a Welcome Message with options to select a location of interest, learn more about the system, or if you have previously enrolled, unsubscribe.
 
-![](https://raw.githubusercontent.com/jimmoffitt/FloodSocial/master/imgs/Welcome_Message.png)
+![](https://raw.githubusercontent.com/jimmoffitt/FloodSocial/master/imgs/welcome_message.png)
 
 After you have navigated past the Welcome Message you can send 'command' Direct Messages to add more areas of interest, to list your current areas, or to unsubscribe.
 

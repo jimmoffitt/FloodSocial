@@ -44,8 +44,6 @@ if __FILE__ == $0 #This script code is executed when running this file.
    tweet_link = "https://twitter.com/snowman/status/834221636723277824"
    message = "A Tweet of interest has been posted: #{tweet_link}"
    
-   
    sender = SendDirectMessage.new
-   #dm_content = sender.generate_message(user_id, message)
    sender.send_direct_message(sender.generate_message(user_id, message))
 end

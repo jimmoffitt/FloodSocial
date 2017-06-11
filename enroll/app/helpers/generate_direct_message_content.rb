@@ -19,31 +19,31 @@ class GenerateDirectMessageContent
 		quick_reply['options'] = []
 
 		option = {}
-		option['label'] = 'Add area of interest'
+		option['label'] = '+ Add area of interest'
 		option['description'] = 'Enroll by selecting area of interest'
 		option['metadata'] = 'add_area'
 		quick_reply['options'] << option
 		
 		option = {}
-		option['label'] = 'List current area(s) of interest'
+		option['label'] = '䷀ List current area(s) of interest'
 		option['description'] = 'Show current areas of interest'
 		option['metadata'] = 'list'
 		quick_reply['options'] << option
 		
 		option = {}
-		option['label'] = 'Learn more about this system'
+		option['label'] = '☞ Learn more about this system'
 		option['description'] = 'See a detailed system description and links to related information'
 		option['metadata'] = 'learn_more'
 		quick_reply['options'] << option
 
 		option = {}
-		option['label'] = 'Help'
-		option['description'] = '☂ Help with system commands'
+		option['label'] = '☔ Help'
+		option['description'] = 'Help with system commands'
 		option['metadata'] = 'help'
 		quick_reply['options'] << option
 		
 		option = {}
-		option['label'] = 'Unsubscribe'
+		option['label'] = '✂ Unsubscribe'
 		option['description'] = 'Unsubscribe from notification system'
 		option['metadata'] = 'unsubscribe'
 		quick_reply['options'] << option
@@ -122,7 +122,7 @@ class GenerateDirectMessageContent
 		options = []
 		
 		option = {}
-		option['label'] = 'Home'
+		option['label'] = '⌂ Home'
 		option['metadata'] = "return_to_system"
 		options << option
 
@@ -155,7 +155,7 @@ class GenerateDirectMessageContent
 		#Not including 'description' option attributes.
 
 		option = {}
-		option['label'] = 'Home'
+		option['label'] = '⌂ Home'
 		option['metadata'] = "return_to_system"
 		options << option
 
@@ -190,19 +190,19 @@ class GenerateDirectMessageContent
 		options = []
 
 		option = {}
-		option['label'] = 'Add area of interest from list'
+		option['label'] = '+ Add area of interest from list'
 		#option['description'] = 'Enroll by selecting an area of interest from list'
 		option['metadata'] = 'pick_from_list'
 		options << option
 
 		option = {}
-		option['label'] = 'Add area of interest from map'
+		option['label'] = '+ Add area of interest from map'
 		#option['description'] = 'Enroll by selecting an interest using a map'
 		option['metadata'] = 'select_on_map'
 		options << option
 
 		option = {}
-		option['label'] = 'Home'
+		option['label'] = '⌂ Home'
 		#option['description'] = 'Back to main menu'
 		option['metadata'] = "return_to_system"
 		options << option
@@ -306,7 +306,7 @@ class GenerateDirectMessageContent
 		#Not including 'description' option attributes.
 
 		option = {}
-		option['label'] = 'Add area of interest'
+		option['label'] = '+ Add area of interest'
 		option['description'] = 'Enroll by selecting an area of interest'
 		option['metadata'] = 'add_area'
 		options << option
@@ -318,19 +318,19 @@ class GenerateDirectMessageContent
 		#options << option
 
 		option = {}
-		option['label'] = 'Learn more about this system'
+		option['label'] = '☞ Learn more about this system'
 		option['description'] = 'See a detailed system description and links to related information'
 		option['metadata'] = 'learn_more'
 		options << option
 
 		option = {}
-		option['label'] = 'Help'
+		option['label'] = '☔ Help'
 		option['description'] = 'Help with system commands'
 		option['metadata'] = 'help'
 		options << option
 
 		option = {}
-		option['label'] = 'Unsubscribe'
+		option['label'] = '✂ Unsubscribe'
 		option['description'] = 'Unsubscribe from notification system'
 		option['metadata'] = 'unsubscribe'
 		options << option
@@ -370,7 +370,7 @@ class GenerateDirectMessageContent
 		#Not including 'description' option attributes.
 
 		option = {}
-		option['label'] = 'Add area of interest'
+		option['label'] = '+ Add area of interest'
 		option['description'] = 'Enroll by selecting an area of interest'
 		option['metadata'] = 'add_area'
 		options << option
@@ -382,25 +382,25 @@ class GenerateDirectMessageContent
 		#options << option
 
 		option = {}
-		option['label'] = 'List current area(s) of interest'
+		option['label'] = '䷀ List current area(s) of interest'
 		option['description'] = 'Show current areas of interest'
 		option['metadata'] = 'list'
 		options << option
 		
 		option = {}
-		option['label'] = 'Learn more about this system'
+		option['label'] = '☞ Learn more about this system'
 		option['description'] = 'See a detailed system description and links to related information'
 		option['metadata'] = 'learn_more'
 		options << option
 
 		option = {}
-		option['label'] = 'Help'
+		option['label'] = '☔ Help'
 		option['description'] = 'Help with system commands'
 		option['metadata'] = 'help'
 		options << option
 
 		option = {}
-		option['label'] = 'Unsubscribe'
+		option['label'] = '✂ Unsubscribe'
 		option['description'] = 'Unsubscribe from notification system'
 		option['metadata'] = 'unsubscribe'
 		options << option

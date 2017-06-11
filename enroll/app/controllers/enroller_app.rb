@@ -60,7 +60,6 @@ class EnrollerApp < Sinatra::Base
 		if not crc_token.nil?
 
 			puts "CRC event with #{crc_token}"
-			#puts "consumer secret: #{settings.dm_api_consumer_secret}"
 			puts "headers: #{headers}"
 			puts headers['X-Twitter-Webhooks-Signature']
 
@@ -76,15 +75,13 @@ class EnrollerApp < Sinatra::Base
 
 	# Receives DM events.
 	post '/webhooks/twitter' do
-		puts "Received event from DM API"
-
+		#puts "Received event(s) from DM API"
 		request.body.rewind
-		event = request.body.read
+		events = request.body.read
 
 		manager = EventManager.new
-		manager.handle_event(event)
+		manager.handle_event(events)
 
 		status 200
-
 	end
 end

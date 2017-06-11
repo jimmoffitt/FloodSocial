@@ -40,18 +40,18 @@ class EnrollerApp < Sinatra::Base
 	end
 
 	get '/' do
-		"<p><b>Welcome to the @FloodSocial notification system!</b>ç<br>
+		"<p><b>Welcome to the @FloodSocial notification system!</b><br>
           
 <p>This websocket-based component is used for enrolling subscribers into a geo-aware, Twitter-based notification system.</p><br>
           This component is a consumer of Account Activity API events, and uses Direct Message (DM) API to communicate to recipient account.<br><br>
 
           This demo is currently using @USGS_TexasFlood and @USGS_TexasRain as its 'source' Twitter accounts.<br>
           However, this system can be tied to any Twitter account(s) that posts geo-tagged Tweets.<br><br>
-          Take a tour of the demo by sending a Direct Message (DM) to @FloodSocial. <br> <br>
-          Pro Tip: pick an area (with map) outside of Texas and you'll never receive a notification. <br> <br>
 
-<p>While this 'Enroller' component essentially runs 24/7, the components that listen for Tweets of (subscribed) interest and send DMs to recipient are usually only running during development, testing, and demos... </p>
-
+          <b>Take a tour of the demo by sending a Direct Message (DM) to @FloodSocial.</b> <br> <br>
+          
+<p>While this 'Enroller' component essentially runs 24/7, the components that listen for Tweets of (subscribed) interest and send DMs to recipients are usually only running during development, testing, and demos... </p>
+<p>Pro Tip: pick an area (with map) outside of Texas and you'll never receive a notification (unless you are participating in demo!). </p>
 
     "
 	end

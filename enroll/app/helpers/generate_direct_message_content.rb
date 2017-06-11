@@ -38,7 +38,7 @@ class GenerateDirectMessageContent
 
 		option = {}
 		option['label'] = 'Help'
-		option['description'] = 'Help with system commands'
+		option['description'] = '☂ Help with system commands'
 		option['metadata'] = 'help'
 		quick_reply['options'] << option
 		

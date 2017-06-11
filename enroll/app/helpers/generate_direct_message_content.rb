@@ -25,7 +25,7 @@ class GenerateDirectMessageContent
 		quick_reply['options'] << option
 		
 		option = {}
-		option['label'] = '䷀ List current area(s) of interest'
+		option['label'] = '≡ List current area(s) of interest'
 		option['description'] = 'Show current areas of interest'
 		option['metadata'] = 'list'
 		quick_reply['options'] << option
@@ -190,13 +190,13 @@ class GenerateDirectMessageContent
 		options = []
 
 		option = {}
-		option['label'] = '+ Add area of interest from list'
+		option['label'] = '+ Add area of interest from list ≡'
 		#option['description'] = 'Enroll by selecting an area of interest from list'
 		option['metadata'] = 'pick_from_list'
 		options << option
 
 		option = {}
-		option['label'] = '+ Add area of interest from map'
+		option['label'] = '+ Add area of interest from map 🌎'
 		#option['description'] = 'Enroll by selecting an interest using a map'
 		option['metadata'] = 'select_on_map'
 		options << option
@@ -311,12 +311,6 @@ class GenerateDirectMessageContent
 		option['metadata'] = 'add_area'
 		options << option
 
-		#option = {}
-		#option['label'] = 'Pick area of interest from map'
-		#option['description'] = 'Enroll by selecting location of interest using a map'
-		#option['metadata'] = 'select_on_map'
-		#options << option
-
 		option = {}
 		option['label'] = '☞ Learn more about this system'
 		option['description'] = 'See a detailed system description and links to related information'
@@ -375,14 +369,8 @@ class GenerateDirectMessageContent
 		option['metadata'] = 'add_area'
 		options << option
 
-		#option = {}
-		#option['label'] = 'Pick area of interest from map'
-		#option['description'] = 'Enroll by selecting location of interest using a map'
-		#option['metadata'] = 'select_on_map'
-		#options << option
-
 		option = {}
-		option['label'] = '䷀ List current area(s) of interest'
+		option['label'] = '≡ List current area(s) of interest'
 		option['description'] = 'Show current areas of interest'
 		option['metadata'] = 'list'
 		options << option
@@ -411,11 +399,7 @@ class GenerateDirectMessageContent
 		#options << option
 
 		message_data['quick_reply']['options'] = options
-		
-		
-
 		event['event']['message_create']['message_data'] = message_data
-
 		event.to_json
 
 	end
@@ -458,8 +442,4 @@ class GenerateDirectMessageContent
 		event.to_json
 
 	end
-	
-	
-	
-
 end

@@ -2,7 +2,7 @@ class GenerateDirectMessageContent
 
 	def generate_greeting
 
-		greeting = "Welcome to a Twitter-based, geo-aware notification system. This system is developed to work with any account that posts geo-tagged Tweets, and is currently using the @USGS_TexasFlood and @USGS_TexasRain Twitter accounts as the 'source' data.\n\nYou can enroll in the system by adding an area of interest. After enrolling will receive a Direct Message notification whenever a source Twitter account posts a Tweet from that area. "
+		greeting = "💧Welcome to a Twitter-based, geo-aware notification system. This system is developed to work with any account that posts geo-tagged Tweets, and is currently using the @USGS_TexasFlood and @USGS_TexasRain Twitter accounts as the 'source' data.\n\n💧 You can enroll in the system by adding an area of interest. After enrolling will receive a Direct Message notification whenever a source Twitter account posts a Tweet from that area. "
 		greeting
 
 	end
@@ -103,7 +103,7 @@ class GenerateDirectMessageContent
 
 	def generate_system_info(recipient_id)
 
-		message_text = "The USGS Texas Water Science Center has created two Twitter accounts that Tweet flood information from across Texas. The @USGS_TexasFlood and @USGS_TexasRain accounts are completely autonomous and broadcast data from over 750 rain and river gauges. These gauges Tweet when they have met or exceeded flood thresholds as defined by the National Weather Service (NWS).\nFor more information about this system, click on: https://blog.twitter.com/2016/using-twitter-as-a-go-to-communication-channel-during-severe-weather-events\n\nThis system was developed to enable Twitter users to receive notifications when gauges from selected areas of interest Tweet. Before this system, users had the option to follow these two accounts and turn on Twitter Tweet notifications. This option was not ideal since users would receive notifications about all gauges, including those hundreds of miles away.\n\u2744\nA key detail is that every Tweet posted by these two accounts is geo-tagged, which enables this system to only make notifications when gauges within your area(s) of interest Tweet.\n\u2744\nFor sample code, see https://github.com/jimmoffitt/FloodSocial"
+		message_text = "💧The USGS Texas Water Science Center has created two Twitter accounts that Tweet flood information from across Texas. The @USGS_TexasFlood and @USGS_TexasRain accounts are completely autonomous and broadcast data from over 750 rain and river gauges. These gauges Tweet when they have met or exceeded flood thresholds as defined by the National Weather Service (NWS).\n💧For more information about this system, click on: https://blog.twitter.com/2016/using-twitter-as-a-go-to-communication-channel-during-severe-weather-events\n\n💧This system was developed to enable Twitter users to receive notifications when gauges from selected areas of interest Tweet. Before this system, users had the option to follow these two accounts and turn on Twitter Tweet notifications. This option was not ideal since users would receive notifications about all gauges, including those hundreds of miles away.\n\n💧A key detail is that every Tweet posted by these two accounts is geo-tagged, which enables this system to only make notifications when gauges within your area(s) of interest Tweet.\n\n💧For sample code, see https://github.com/jimmoffitt/FloodSocial"
 
 		#Build DM content.
 		event = {}
@@ -135,7 +135,7 @@ class GenerateDirectMessageContent
 	def generate_system_help(recipient_id)
 
 		message_text = "This system supports several commands. Commands are made by sending a Direct Message including these (case-insensitive) keywords:
-                      \n💧 'Home', 'Hello', or 'Main' -- go back to main menu.\n\💧 'Add' -- Add another area of interest. \n💧 'List' -- Review what areas of interest you are subscribed to. \n💧 'About' -- Learn more about the system and follow links to more information. \n\u2744 'Help' -- See this help screen. \n💧 'Quit' or 'Stop' or 'Unsubscribe' -- Unsubscribe from system, removing all areas of interest."
+                      \n💧 'Home', 'Hello', or 'Main' -- go back to main menu.\n\💧 'Add' -- Add another area of interest. \n💧 'List' -- Review what areas of interest you are subscribed to. \n💧 'About' -- Learn more about the system and follow links to more information. \n💧 'Help' -- See this help screen. \n💧 'Quit' or 'Stop' or 'Unsubscribe' -- Unsubscribe from system, removing all areas of interest."
 
 		#Build DM content.
 		event = {}
@@ -435,7 +435,7 @@ class GenerateDirectMessageContent
 		message_data = {}
 		message_data['text'] = "You have been unsubscribed.\n\n To re-subscribe either send an 'Add' Direct Message or delete this conversation and send a new Direct Message to see the Welcome Message.
       \n
-		\n Stay safe and dry!"
+		\n☔ Stay safe and dry! ☔"
 
 		event['event']['message_create']['message_data'] = message_data
 

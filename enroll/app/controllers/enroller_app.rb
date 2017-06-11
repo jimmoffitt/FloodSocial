@@ -50,7 +50,7 @@ class EnrollerApp < Sinatra::Base
           Take a tour of the demo by sending a Direct Message (DM) to @FloodSocial. <br> <br>
           Pro Tip: pick an area (with map) outside of Texas and you'll never receive a notification. <br> <br>
 
-<p>While this 'Enroller' component essentially runs 24/7, the components that listen for Tweets of (subscribed) interest and send DMs to recipient are usually only running during development, testing, and demos... 
+<p>While this 'Enroller' component essentially runs 24/7, the components that listen for Tweets of (subscribed) interest and send DMs to recipient are usually only running during development, testing, and demos... </p>
 
 
     "

@@ -19,7 +19,7 @@ class GenerateDirectMessageContent
 		quick_reply['options'] = []
 
 		option = {}
-		option['label'] = '+ Add area of interest'
+		option['label'] = '➕ Add area of interest'
 		option['description'] = 'Enroll by selecting area of interest'
 		option['metadata'] = 'add_area'
 		quick_reply['options'] << option
@@ -31,7 +31,7 @@ class GenerateDirectMessageContent
 		quick_reply['options'] << option
 		
 		option = {}
-		option['label'] = '☞ Learn more about this system'
+		option['label'] = '❓Learn more about this system'
 		option['description'] = 'See a detailed system description and links to related information'
 		option['metadata'] = 'learn_more'
 		quick_reply['options'] << option
@@ -135,7 +135,7 @@ class GenerateDirectMessageContent
 	def generate_system_help(recipient_id)
 
 		message_text = "This system supports several commands. Commands are made by sending a Direct Message including these (case-insensitive) keywords:
-                      \n\u2744 'Home', 'Hello', or 'Main' -- go back to main menu.\n\u2744 'Add' -- Add another area of interest. \n\u2744 'List' -- Review what areas of interest you are subscribed to. \n\u2744 'About' -- Learn more about the system and follow links to more information. \n\u2744 'Help' -- See this help screen. \n\u2744 'Quit' or 'Stop' or 'Unsubscribe' -- Unsubscribe from system, removing all areas of interest."
+                      \n💧 'Home', 'Hello', or 'Main' -- go back to main menu.\n\💧 'Add' -- Add another area of interest. \n💧 'List' -- Review what areas of interest you are subscribed to. \n💧 'About' -- Learn more about the system and follow links to more information. \n\u2744 'Help' -- See this help screen. \n💧 'Quit' or 'Stop' or 'Unsubscribe' -- Unsubscribe from system, removing all areas of interest."
 
 		#Build DM content.
 		event = {}
@@ -190,13 +190,13 @@ class GenerateDirectMessageContent
 		options = []
 
 		option = {}
-		option['label'] = '+ Add area of interest from list ≡'
+		option['label'] = '➕ Add area of interest from list ≡'
 		#option['description'] = 'Enroll by selecting an area of interest from list'
 		option['metadata'] = 'pick_from_list'
 		options << option
 
 		option = {}
-		option['label'] = '+ Add area of interest from map 🌎'
+		option['label'] = '➕ Add area of interest from map 🌎'
 		#option['description'] = 'Enroll by selecting an interest using a map'
 		option['metadata'] = 'select_on_map'
 		options << option
@@ -259,7 +259,7 @@ class GenerateDirectMessageContent
 
 		list.each do |item|
 			option = {}
-			option['label'] = item
+			option['label'] = '💧 ' + item
 			option['metadata'] = "location_list_choice: #{item}"
 			#Not including 'description' option attributes.
 			options << option
@@ -292,7 +292,7 @@ class GenerateDirectMessageContent
 			list_message = "You are subscribed to the following areas of interest:"
 
 			subscriptions.each do |area|
-				list_message = list_message + "\n\u2744 #{area}"
+				list_message = list_message + "\n💧 #{area}"
 			end
 
 		end
@@ -306,13 +306,13 @@ class GenerateDirectMessageContent
 		#Not including 'description' option attributes.
 
 		option = {}
-		option['label'] = '+ Add area of interest'
+		option['label'] = '➕ Add area of interest'
 		option['description'] = 'Enroll by selecting an area of interest'
 		option['metadata'] = 'add_area'
 		options << option
 
 		option = {}
-		option['label'] = '☞ Learn more about this system'
+		option['label'] = '❓Learn more about this system'
 		option['description'] = 'See a detailed system description and links to related information'
 		option['metadata'] = 'learn_more'
 		options << option
@@ -364,7 +364,7 @@ class GenerateDirectMessageContent
 		#Not including 'description' option attributes.
 
 		option = {}
-		option['label'] = '+ Add area of interest'
+		option['label'] = '➕ Add area of interest'
 		option['description'] = 'Enroll by selecting an area of interest'
 		option['metadata'] = 'add_area'
 		options << option
@@ -376,7 +376,7 @@ class GenerateDirectMessageContent
 		options << option
 		
 		option = {}
-		option['label'] = '☞ Learn more about this system'
+		option['label'] = '❓ Learn more about this system'
 		option['description'] = 'See a detailed system description and links to related information'
 		option['metadata'] = 'learn_more'
 		options << option

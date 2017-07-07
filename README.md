@@ -9,5 +9,5 @@ Code for an example Twitter notification system based on subscribers sharing loc
     + Real-time PowerTrack stream consumer - Receives Tweets within a few seconds of being posted.  
   + _Notifier_ - sending notification Direct Messages with latest Twitter DM API.
 
-![](https://raw.githubusercontent.com/jimmoffitt/FloodSocial/master/imgs/floodsocial_options.png)
+![](https://raw.githubusercontent.com/jimmoffitt/FloodSocial/master/imgs/floodsocial_options.jpeg)
 

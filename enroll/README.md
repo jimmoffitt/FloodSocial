@@ -115,5 +115,16 @@ After you have navigated past the Welcome Message you can send 'command' Direct 
   + Direct Message Sender
   + Rule manager: takes user submissions and converts those to PowerTrack rules and adds to stream.
 
+==========================================
+## Next Steps 
+
+As a developer, the next steps you'll take:
+
++ Developing Webhook Consumer
++ Stand-up a web application that will be your webhook consumer 
++ Implement a consumer Challenge Response Check (CRC) method
++ Implement a consumer webhook event manager
+
+
 
 
